@@ -1,0 +1,1 @@
+./thex test.bin

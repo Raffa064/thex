@@ -1,0 +1,41 @@
+#pragma once
+
+#include <algorithm>
+
+/*
+  A cursor that is usinig selection should move the end selection pointer,
+  otherwise, the start pointer.
+*/
+
+class Cursor {
+  int start;
+  int end;
+  int color;
+  bool selection;
+
+public:
+  int get_start() { return start; }
+  void set_start(int start) { this->start = start; }
+
+  int get_end() { return end; }
+  void set_end(int end) { this->end = std::max(start, end); }
+
+  int get_color() { return color; }
+  void set_color(int color) { this->color = color; }
+
+  bool is_selection() { return selection; }
+  void set_selection(int name) { this->selection = name; }
+  bool toggle_selection() { return selection = !selection; }
+
+  void move(int amount) {
+    if (selection)
+      set_end(end + amount);
+    else {
+      set_start(start + amount);
+      set_end(start);
+    }
+  }
+
+  Cursor(int start, int end, int color, bool selection)
+      : start(start), end(end), color(color), selection(selection) {}
+};

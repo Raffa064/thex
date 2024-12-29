@@ -1,0 +1,13 @@
+.cache/
+CMakeFiles/
+cmake_install.cmake
+Makefile
+CMakeCache.txt
+compile_commands.json
+logs.txt
+
+#tmp
+maincpp
+
+# Targets
+./thex
