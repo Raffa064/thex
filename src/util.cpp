@@ -73,8 +73,12 @@ bool starts_with(string input, string sub) {
 
 string to_hex(char ch) {
   ostringstream stream;
-  stream << hex << setw(2) << setfill('0') << (int)ch;
+  stream << hex << setw(2) << setfill('0') << (int) ch;
   return stream.str();
+}
+
+string to_hex(char ch, int length) {
+  return padStart(to_hex(ch), length, '0');
 }
 
 string padStart(string input, int length, char ch) {

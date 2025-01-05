@@ -1,6 +1,8 @@
 #pragma once
 
+#include "util.h"
 #include <algorithm>
+#include <string>
 
 /*
   A cursor that is usinig selection should move the end selection pointer,
@@ -43,6 +45,10 @@ public:
 
   void limit(int mx) {
     limit(0, mx);
+  }
+
+  std::string to_string() {
+    return "[ " + to_hex(start, 8) + (is_selection()? ":" +to_hex(end, 8) + " ]" : " ]");
   }
 
   Cursor(int start, int end, int color, bool selection)

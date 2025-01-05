@@ -85,8 +85,7 @@ void THexEditor::draw() {
 
   for (int y = 0; y < size.height; y++) {
     int on_screen_line = bwidth * y;
-    string addr_str =
-        padStart(to_hex(display.position + on_screen_line), ADDR_SIZE, '0');
+    string addr_str = to_hex(display.position + on_screen_line, ADDR_SIZE);
 
     draw_text(pos.x, pos.y + y, addr_str);
 
@@ -103,7 +102,8 @@ void THexEditor::draw() {
         curr_c = display.buffer[pos_d];
         curr_b = padStart(to_hex(curr_c), 2, '0');
 
-        if (curr_c < 32 || curr_c == 127) {
+        // Check for ASCII printable chars
+        if (curr_c < 0x20 || curr_c > 0x7E) {
           curr_c = '.';
           invisible = true;
         }

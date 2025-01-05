@@ -75,10 +75,10 @@ void THexApp::loop() {
       int fend = openedFile.size();
       cursor.limit(fend - 1);
 
-      if (cursor.get_start() < display.position)
+      if (cursor.get_end() < display.position)
         display.position -= editor.get_bwidth();
 
-      if (cursor.get_start() >= display.position + editor.get_bcount())
+      if (cursor.get_end() >= display.position + editor.get_bcount())
         display.position += editor.get_bwidth();
 
       display.position = min(fend, max(0, display.position));
