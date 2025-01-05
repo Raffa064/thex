@@ -1,12 +1,10 @@
 #pragma once
 
-#include "file.h"
-#include "thex/editor.h"
 #include <ncurses.h>
 #include <ui.h>
 
 class THexApp {
-  IOFile openedFile;
+  std::string path;
   bool running;
   
 public:
@@ -14,5 +12,5 @@ public:
   void loop();
   void end();
 
-  THexApp(std::string);
+  THexApp(std::string path) : path(path) {};
 };

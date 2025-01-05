@@ -8,6 +8,7 @@
 #define PALETTE_CURSOR_BLUE 4
 #define PALETTE_NON_EMPTY 5
 #define PALETTE_EOF 6
+#define PALETTE_INVISIBLE 7
 
 static void init_palette() {
   init_pair(PALETTE_NORMAL, COLOR_WHITE, COLOR_BLACK);
@@ -17,4 +18,5 @@ static void init_palette() {
   init_pair(PALETTE_CURSOR_BLUE, COLOR_BLACK, COLOR_BLUE);
   init_pair(PALETTE_NON_EMPTY, COLOR_WHITE, COLOR_BLACK);
   init_pair(PALETTE_EOF, COLOR_WHITE, COLOR_RED);
+  init_pair(PALETTE_INVISIBLE, COLOR_BLACK, COLOR_WHITE);
 }

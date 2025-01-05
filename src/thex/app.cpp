@@ -1,7 +1,7 @@
+#include "draw.h"
 #include "file.h"
 #include "pallete.h"
 #include "thex/editor.h"
-#include "thex/preview.h"
 #include "thex/statusbar.h"
 #include "ui.h"
 #include <algorithm>
@@ -42,26 +42,24 @@ void THexApp::loop() {
   int &FILLW = placer.ctx.fill.width;
   int &FILLH = placer.ctx.fill.height;
 
-  char *str = (char *)"This is my fake buffer, used to test how the app "
-                      "handles big text sequences inside it's editor and "
-                      "preview elements.\nThis app also contains a statusbar "
-                      "and a command line to run useful command.";
- 
-  Buffer buffer{.data = str, .length = strlen(str), .count = strlen(str)};
+  char *str = (char *) "This is my fake buffer, used to test how the app "
+                       "handles big text sequences inside it's editor and "
+                       "preview elements.\nThis app also contains a statusbar "
+                       "and a command line to run useful command.";
 
   Cursor cursor(0, 0, PALETTE_CURSOR_BLUE, false);
-  
-  THexEditor editor(buffer);
-  THexAddrerssBar addressbar(editor);
-  THexPreview preview(buffer);
+
+  BFReader openedFile(path, 3, 1000);
+  DisplayBuffer display(500, .2f);
+
+  THexEditor editor(display);
   THexStatusBar statusbar(cursor);
   DebugBox cmdline(4);
   Separator sep0, sep1;
 
   editor.add_cursor(cursor);
-  preview.add_cursor(cursor);
 
-  FnReceiver cursorControl = FnReceiver([&cursor, &editor](Event evt) -> bool {
+  FnReceiver cursorControl = FnReceiver([&cursor, &display, &editor, &openedFile](Event evt) -> bool {
     if (evt.keycode == 's') {
       cursor.toggle_selection();
       return true;
@@ -73,42 +71,45 @@ void THexApp::loop() {
     if (x || y) {
       int move = x + y * editor.get_bwidth();
       cursor.move(move);
+
+      int fend = openedFile.size();
+      cursor.limit(fend - 1);
+
+      if (cursor.get_start() < display.position)
+        display.position -= editor.get_bwidth();
+
+      if (cursor.get_start() >= display.position + editor.get_bcount())
+        display.position += editor.get_bwidth();
+
+      display.position = min(fend, max(0, display.position));
+
       return true;
     }
 
     return false;
   });
 
-  int &editor_width = editor.size.width;
-  editor_width = getmaxx(stdscr) - (DEFAULT_PREVIEW_WITH + ADDRESS_BAR_WIDTH);
-  editor_width = editor_width / 3 * 3;
-
   int i = 0;
   while (running) {
     refresh();
 
+    display.dynamic_resize(editor.get_bcount());
+    openedFile.read(display.buffer, display.position, display.length);
+    display.eof = openedFile.size();
+
     Event e = imanager.get();
-    e.propagate(vector<InputReceiver *>{&cmdline, &cursorControl, &editor});
+    e.propagate(vector<InputReceiver *>{&cmdline, &cursorControl});
 
     placer.move({0, 0});
-    placer.align(HORIZONTAL);
-    placer.place(addressbar, { ADDRESS_BAR_WIDTH , FILLH - 2});
-    placer.place(sep0, {1, FILLH});
-    placer.place(editor, {editor_width, FILLH - 2});
-    placer.place(sep1, {1, FILLH});
     placer.align(VERTICAL);
-    placer.place(preview, {FILLW, FILLH - 2});
+    placer.place(editor, { FILLW, FILLH - 2});
     placer.moveX(0);
     placer.place(statusbar, {FILLW, 1});
     placer.place(cmdline, {FILLW, 1});
 
-    uidraw({
-      &addressbar, &sep0, &editor, &sep1, &preview, 
-      &statusbar, 
-      &cmdline
-    });
+    uidraw({&editor, &statusbar, &cmdline});
 
-    napms(50);
+    if (e.keycode == ':') running = false;
   }
 }
 
@@ -116,5 +117,3 @@ void THexApp::end() {
   running = false;
   endwin();
 }
-
-THexApp::THexApp(string path) : openedFile(IOFile(path)) {}

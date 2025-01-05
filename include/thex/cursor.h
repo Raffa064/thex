@@ -15,7 +15,7 @@ class Cursor {
 
 public:
   int get_start() { return start; }
-  void set_start(int start) { this->start = start; }
+  void set_start(int start) { this->start = std::max(0, start); }
 
   int get_end() { return end; }
   void set_end(int end) { this->end = std::max(start, end); }
@@ -34,6 +34,15 @@ public:
       set_start(start + amount);
       set_end(start);
     }
+  }
+
+  void limit(int minPos, int maxPos) {
+    set_start(std::min(maxPos, std::max(minPos, get_start())));
+    set_end(std::min(maxPos, std::max(minPos, get_end())));
+  }
+
+  void limit(int mx) {
+    limit(0, mx);
   }
 
   Cursor(int start, int end, int color, bool selection)

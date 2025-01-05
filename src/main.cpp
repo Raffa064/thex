@@ -1,19 +1,20 @@
+#include "file.h"
 #include <iostream>
 #include <ncurses.h>
+#include <string>
 #include <thex/app.h>
 #include <ui.h>
-#include <string>
 
 using namespace std;
 
-THexApp* app;
+THexApp *app;
 
 void sig_handler(int signal) {
   app->end();
   std::cout << "Finished by kill signal" << std::endl;
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   signal(SIGTERM, sig_handler);
 
   if (argc != 2) { // 0:thex 1:file_path

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#define help "Mov: ^i <j vk >l Togg.Selection: s  Resize: w/e"
+#define help_text "Mov: ^i <j vk >l Togg.Selection: s"
 
 void THexStatusBar::draw() {
   string cursorEnd = cursor.is_selection() ?
@@ -19,7 +19,7 @@ void THexStatusBar::draw() {
            padEnd("HEX", 7, ' ').c_str(), // HEX ASCII
            padStart(to_hex(cursor.get_start()), 8, '0').c_str(),
            cursorEnd.c_str(),
-           help
+           help_text
   );
   draw_rcolor();
 }
