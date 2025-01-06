@@ -1,6 +1,6 @@
 #pragma once
 
-#include "thex/editor.h"
+#include "thex/cursor.h"
 #include <ui.h>
 
 class THexStatusBar : public UI {
@@ -9,5 +9,5 @@ class THexStatusBar : public UI {
 public:
   void draw() override;
 
-  THexStatusBar(Cursor& cursor) : cursor(cursor) {}
+  THexStatusBar(Cursor& cursor) : cursor(cursor) {} 
 };

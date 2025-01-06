@@ -45,6 +45,8 @@ public:
 
   // write(char *buffer, int start, int length);
 
+  BFReader() {}
+
   BFReader(std::string path, int chunkCount, int chunkLength);
 
   ~BFReader();

@@ -1,5 +1,5 @@
-#include "file.h"
 #include <iostream>
+#include <memory>
 #include <ncurses.h>
 #include <string>
 #include <thex/app.h>
@@ -7,15 +7,11 @@
 
 using namespace std;
 
-THexApp *app;
-
-void sig_handler(int signal) {
-  app->end();
-  std::cout << "Finished by kill signal" << std::endl;
-}
-
 int main(int argc, char *argv[]) {
-  signal(SIGTERM, sig_handler);
+  signal(SIGTERM, [](int signal) {
+    cout << "Finished by kill signal: " << signal << endl;
+  });
+
 
   if (argc != 2) { // 0:thex 1:file_path
     cout << "Invalid argument count" << endl;
@@ -23,8 +19,9 @@ int main(int argc, char *argv[]) {
   }
 
   string path(argv[1]);
-  app = new THexApp(path);
-  app->start();
 
-  delete app;
+  // TODO: validate path
+
+  auto app = make_unique<THexApp>(path);
+  app->start();
 }

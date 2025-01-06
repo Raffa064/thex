@@ -7,7 +7,7 @@ using namespace std;
 
 bool Event::shift() {
   return keycode != lowercase;
-}
+} 
 
 int Event::axis(int lowkey, int highKey) {
   return -(keycode == lowkey) + (keycode == highKey);

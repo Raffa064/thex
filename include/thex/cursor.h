@@ -43,13 +43,18 @@ public:
     set_end(std::min(maxPos, std::max(minPos, get_end())));
   }
 
-  void limit(int mx) {
-    limit(0, mx);
-  }
+  void limit(int mx) { limit(0, mx); }
 
   std::string to_string() {
-    return "[ " + to_hex(start, 8) + (is_selection()? ":" +to_hex(end, 8) + " ]" : " ]");
+    return "[ " + to_hex(start, 8) +
+           (is_selection() ? ":" + to_hex(end, 8) + " ]" : " ]");
   }
+
+  Cursor *cpy() {
+    return new Cursor(start, end, color, selection);
+  }
+
+  Cursor() {}
 
   Cursor(int start, int end, int color, bool selection)
       : start(start), end(end), color(color), selection(selection) {}

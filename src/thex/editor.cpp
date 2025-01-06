@@ -29,6 +29,7 @@ void DisplayBuffer::dynamic_resize(int len) {
 
 DisplayBuffer::DisplayBuffer(int length, float growth_factor) {
   this->growth_factor = growth_factor;
+  this->buffer = nullptr; 
   dynamic_resize(length);
 }
 

@@ -68,7 +68,7 @@ bool starts_with(string input, string sub) {
   if (input.size() < sub.size())
     return false;
 
-  return input.compare(0, input.size(), sub) == 0;
+  return input.compare(0, sub.size(), sub) == 0;
 }
 
 string to_hex(char ch) {
