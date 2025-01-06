@@ -1,3 +1,0 @@
-(cmake . && cmake --build .)
-
-exit $?

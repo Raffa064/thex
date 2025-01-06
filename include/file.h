@@ -22,7 +22,6 @@ class BFReader {
   int chunkLength;
   int upchunk_index;
   int upchunk_position;
-  int end_of_file = NOT_REACHED;
 
   int get_buffer_size();
 

@@ -6,8 +6,5 @@ CMakeCache.txt
 compile_commands.json
 logs.txt
 
-#tmp
-maincpp
-
 # Targets
-./thex
+thex

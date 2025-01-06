@@ -1,14 +1,26 @@
+#!/bin/bash
+
+function load_settings() {
+  source ./run-settings.sh
+}
+
+load_settings # first load
+
 function watch_changes() {
-  watch_path="./"
-  pid=""
-  while inotifywait -q -r -e close_write,moved_to,create,delete $watch_path >/dev/null 2>&1; do
-    bash ./run-build.sh >./logs.txt 2>&1
+  while inotifywait -q -r -e close_write,moved_to,create,delete $RUN_WATCH >/dev/null 2>&1; do
+    load_settings
+
+    if [ -f "$RUN_EXECUTABLE" ]; then
+      rm $RUN_EXECUTABLE
+    fi
+
+    eval $RUN_BUILD_COMMAND >$RUN_LOG 2>&1
     status=$?
 
     if [ $status -eq 0 ]; then
-      rm ./logs.txt
+      >$RUN_LOG # clear logs
     fi
-
+    
     pkill thex
   done
 }
@@ -18,12 +30,13 @@ watch_changes &
 while :; do
   clear
 
-  ERR_LOG=$(cat ./logs.txt)
+  load_settings
+  LOGS=$(cat $RUN_LOG 2>/dev/null)
 
-  if [ -n "$ERR_LOG" ]; then
-    echo "$ERR_LOG"
+  if [ -n "$LOGS" ]; then
+    echo "$LOGS"
   else
-    bash ./run-command.sh
+    eval "$RUN_COMMAND"
   fi
 
   sleep 1
