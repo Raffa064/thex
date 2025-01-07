@@ -23,13 +23,13 @@ class BFReader {
   int upchunk_index;
   int upchunk_position;
 
-  int get_buffer_size();
+  int get_buffer_size() const;
 
-  int get_chunk_index(int id);
+  int get_chunk_index(int id) const;
 
-  int get_chunk_position(int id);
+  int get_chunk_position(int id) const;
 
-  int to_index(int position);
+  int to_index(int position) const;
 
   void read_chunk(int id);
 
@@ -38,15 +38,17 @@ class BFReader {
   void fit_to_range(int startPosition, int endPosition);
 
 public:
-  int size();
+  int size() const;
   
   void read(char *buffer, int startPosition, int length);
 
   // write(char *buffer, int start, int length);
 
-  BFReader() {}
+  BFReader() : chunkBuffer(nullptr) {}
 
-  BFReader(std::string path, int chunkCount, int chunkLength);
+  BFReader(std::string path, int chunkCount, int chunkLength, bool read=true);
+
+  BFReader(const BFReader& other);
 
   ~BFReader();
 };

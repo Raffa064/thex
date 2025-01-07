@@ -10,12 +10,12 @@
 
 class THexApp {
   std::string path;
-  Cursor* cursor;
-  BFReader* openedFile;
-  DisplayBuffer* display;
-  THexEditor* editor;
-  THexStatusBar* statusbar;
-  THexCommandLine* cmdline;
+  BFReader openedFile;
+  DisplayBuffer display;
+  Cursor cursor;
+  THexEditor editor;
+  THexStatusBar statusbar;
+  THexCommandLine cmdline;
 
   bool is_running;
 

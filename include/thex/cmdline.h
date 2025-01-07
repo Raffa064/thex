@@ -30,4 +30,12 @@ public:
   THexCommandLine();
 
   ~THexCommandLine();
+
+  THexCommandLine& operator=(THexCommandLine other) {
+    buffer = other.buffer;
+    commands = other.commands;
+    command_output = other.command_output;
+
+    return *this;
+  }
 };

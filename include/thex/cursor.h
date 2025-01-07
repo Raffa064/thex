@@ -50,12 +50,11 @@ public:
            (is_selection() ? ":" + to_hex(end, 8) + " ]" : " ]");
   }
 
-  Cursor *cpy() {
-    return new Cursor(start, end, color, selection);
-  }
 
   Cursor() {}
 
   Cursor(int start, int end, int color, bool selection)
       : start(start), end(end), color(color), selection(selection) {}
+
+  Cursor(const Cursor& other) : Cursor(other.start, other.end, other.color, other.selection) {}
 };

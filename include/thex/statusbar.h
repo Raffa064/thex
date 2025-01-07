@@ -4,10 +4,18 @@
 #include <ui.h>
 
 class THexStatusBar : public UI {
-  Cursor& cursor;
+  Cursor* cursor = nullptr;
 
 public:
   void draw() override;
 
-  THexStatusBar(Cursor& cursor) : cursor(cursor) {} 
+  THexStatusBar() {}
+
+  THexStatusBar(Cursor* cursor) : cursor(cursor) {} 
+
+  THexStatusBar& operator=(THexStatusBar other) {
+    cursor = other.cursor;
+
+    return *this;
+  }
 };

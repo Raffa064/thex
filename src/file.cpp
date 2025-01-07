@@ -11,17 +11,17 @@ using namespace std;
 #define UP -1
 #define DOWN 1
 
-int BFReader::get_buffer_size() { return chunkCount * chunkLength; }
+int BFReader::get_buffer_size() const { return chunkCount * chunkLength; }
 
-int BFReader::get_chunk_index(int id) {
+int BFReader::get_chunk_index(int id) const {
   return (upchunk_index + id * chunkLength) % get_buffer_size();
 }
 
-int BFReader::get_chunk_position(int id) {
+int BFReader::get_chunk_position(int id) const {
   return upchunk_position + id * chunkLength;
 }
 
-int BFReader::to_index(int position) { 
+int BFReader::to_index(int position) const { 
   int relative_index = position - upchunk_position; // relative to upchunk
   return (upchunk_index + relative_index) % get_buffer_size();
 }
@@ -74,7 +74,7 @@ void BFReader::fit_to_range(int startPosition, int endPosition) {
   }
 }
 
-int BFReader::size() {
+int BFReader::size() const {
   ifstream file(path, ios::binary | ios::ate);
   return file.tellg();
 }
@@ -99,7 +99,7 @@ void BFReader::read(char *buffer, int startPosition, int length) {
 
 // write(char *buffer, int start, int length);
 
-BFReader::BFReader(string path, int chunkCount, int chunkLength) {
+BFReader::BFReader(string path, int chunkCount, int chunkLength, bool read) {
   this->path = path;
   this->chunkCount = chunkCount;
   this->chunkLength = chunkLength;
@@ -109,8 +109,19 @@ BFReader::BFReader(string path, int chunkCount, int chunkLength) {
 
   chunkBuffer = new char[get_buffer_size()];
 
-  for (int i = 0; i < chunkCount; i++)
-    read_chunk(i);
+  if (read)
+    for (int i = 0; i < chunkCount; i++)
+      read_chunk(i);
 }
 
-BFReader::~BFReader() { delete[] chunkBuffer; }
+BFReader::BFReader(const BFReader& other) : BFReader(other.path, other.chunkCount, other.chunkLength, false) {
+  upchunk_index = other.upchunk_index;
+  upchunk_position = other.upchunk_position;
+
+  memcpy(chunkBuffer, other.chunkBuffer, other.get_buffer_size());
+}
+
+BFReader::~BFReader() { 
+  if (chunkBuffer != nullptr) 
+    delete[] chunkBuffer; 
+}

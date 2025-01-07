@@ -10,6 +10,6 @@ using namespace std;
 void THexStatusBar::draw() {
   draw_color(PALETTE_STATUSBAR);
   draw_frect(pos.x, pos.y, size.width, size.height, ' ');
-  draw_text(pos.x, pos.y,  "  THEX  " + cursor.to_string() + help_text);
+  draw_text(pos.x, pos.y,  "  THEX  " + cursor->to_string() + help_text);
   draw_rcolor();
 }

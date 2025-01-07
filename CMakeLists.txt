@@ -7,7 +7,8 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Necessary for LSP completion
 
 if(DEBUG)
-  set(CMAKE_CXX_FLAGS "-O0 -Wall")
+  message("Using DEBUG build option")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -Wall -g")
 endif()
 
 # Project sources and targets

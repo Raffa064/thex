@@ -27,9 +27,11 @@ struct DisplayBuffer {
 
   void dynamic_resize(int length);
 
-  DisplayBuffer() {}
+  DisplayBuffer() : buffer(nullptr) {}
 
   DisplayBuffer(int, float);
+
+  DisplayBuffer(const DisplayBuffer& other);
 
   ~DisplayBuffer();
 };
@@ -39,7 +41,7 @@ public:
   static const int ADDR_SIZE = 8;
   static const int FIXED_SIZE = ADDR_SIZE + 2; // addr bar + dividers
 
-  DisplayBuffer& display;
+  DisplayBuffer* display;
   std::vector<Cursor *> cursors{};
 
   void add_cursor(Cursor &);
@@ -50,5 +52,14 @@ public:
   int get_color(int);
   void draw() override;
 
-  THexEditor(DisplayBuffer& display) : display(display) {}
+  THexEditor() {}
+
+  THexEditor(DisplayBuffer* display) : display(display) {}
+
+  THexEditor& operator=(THexEditor other) {
+    display = other.display;
+    cursors = other.cursors;
+
+    return *this;
+  }
 };
