@@ -1,9 +1,9 @@
 #include "file.h"
 #include "pallete.h"
-#include "thex/cmdline.h"
+#include "thex/ui/cmdline.h"
 #include "thex/cursor.h"
-#include "thex/editor.h"
-#include "thex/statusbar.h"
+#include "thex/ui/editor.h"
+#include "thex/ui/statusbar.h"
 #include "ui.h"
 #include <algorithm>
 #include <clocale>
@@ -12,7 +12,6 @@
 #include <input.h>
 #include <locale.h>
 #include <ncurses.h>
-#include <iostream>
 #include <string>
 #include <thex/app.h>
 #include <vector>

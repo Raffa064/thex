@@ -2,10 +2,10 @@
 
 #include <file.h>
 #include <ncurses.h>
-#include <thex/cmdline.h>
+#include <thex/ui/cmdline.h>
 #include <thex/cursor.h>
-#include <thex/editor.h>
-#include <thex/statusbar.h>
+#include <thex/ui/editor.h>
+#include <thex/ui/statusbar.h>
 #include <ui.h>
 
 class THexApp {
