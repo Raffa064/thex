@@ -1,5 +1,5 @@
-#include "draw.h"
-#include "pallete.h"
+#include <interface/draw.h>
+#include <interface/pallete.h>
 #include <string>
 #include <thex/ui/statusbar.h>
 

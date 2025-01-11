@@ -1,11 +1,10 @@
-#include "thex/ui/cmdline.h"
-#include "draw.h"
-#include "input.h"
-#include "util.h"
+#include <thex/ui/cmdline.h>
+#include <interface/draw.h>
+#include <interface/input.h>
+#include <util.h>
 #include <cstdlib>
 #include <ncurses.h>
 #include <ncursesw/ncurses.h>
-#include <string>
 
 using namespace std;
 

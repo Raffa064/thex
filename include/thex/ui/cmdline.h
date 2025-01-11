@@ -1,7 +1,7 @@
 #pragma once
 
-#include "input.h"
-#include "ui.h"
+#include <interface/input.h>
+#include <interface/ui.h>
 #include <functional>
 #include <string>
 #include <vector>

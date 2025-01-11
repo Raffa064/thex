@@ -1,19 +1,19 @@
 #pragma once
 
-#include "thex/cursor.h"
-#include <ui.h>
+#include <interface/ui.h>
+#include <thex/cursor.h>
 
 class THexStatusBar : public UI {
-  Cursor* cursor = nullptr;
+  Cursor *cursor = nullptr;
 
 public:
   void draw() override;
 
   THexStatusBar() {}
 
-  THexStatusBar(Cursor* cursor) : cursor(cursor) {} 
+  THexStatusBar(Cursor *cursor) : cursor(cursor) {}
 
-  THexStatusBar& operator=(THexStatusBar other) {
+  THexStatusBar &operator=(THexStatusBar other) {
     cursor = other.cursor;
 
     return *this;

@@ -1,8 +1,6 @@
 #include <iostream>
-#include <ncurses.h>
 #include <string>
 #include <thex/app.h>
-#include <ui.h>
 
 using namespace std;
 

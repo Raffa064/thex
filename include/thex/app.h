@@ -1,16 +1,14 @@
 #pragma once
 
-#include <file.h>
+#include <interface/ui.h>
 #include <ncurses.h>
-#include <thex/ui/cmdline.h>
 #include <thex/cursor.h>
+#include <thex/ui/cmdline.h>
 #include <thex/ui/editor.h>
 #include <thex/ui/statusbar.h>
-#include <ui.h>
 
 class THexApp {
   std::string path;
-  BFReader openedFile;
   DisplayBuffer display;
   Cursor cursor;
   THexEditor editor;

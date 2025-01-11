@@ -1,6 +1,6 @@
-#include "draw.h"
+#include <interface/draw.h>
 #include <ncurses.h>
-#include <ui.h>
+#include <interface/ui.h>
 #include <vector>
 
 using namespace std;

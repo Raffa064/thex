@@ -1,9 +1,8 @@
 #pragma once
 
-#include <file.h>
-#include <input.h>
+#include <interface/input.h>
 #include <thex/cursor.h>
-#include <ui.h>
+#include <interface/ui.h>
 #include <vector>
 
 /*

@@ -1,7 +1,7 @@
 #pragma once 
 
 #include <ncurses.h>
-#include <input.h>
+#include <interface/input.h>
 #include <vector>
 
 struct Pair;

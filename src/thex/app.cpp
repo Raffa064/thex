@@ -1,19 +1,17 @@
-#include "file.h"
-#include "pallete.h"
-#include "thex/ui/cmdline.h"
-#include "thex/cursor.h"
-#include "thex/ui/editor.h"
-#include "thex/ui/statusbar.h"
-#include "ui.h"
-#include <algorithm>
 #include <clocale>
 #include <csignal>
 #include <cstdlib>
-#include <input.h>
+#include <interface/input.h>
+#include <interface/pallete.h>
+#include <interface/ui.h>
 #include <locale.h>
 #include <ncurses.h>
 #include <string>
 #include <thex/app.h>
+#include <thex/cursor.h>
+#include <thex/ui/cmdline.h>
+#include <thex/ui/editor.h>
+#include <thex/ui/statusbar.h>
 #include <vector>
 
 #define DEFAULT_PREVIEW_WITH 30
@@ -31,14 +29,13 @@ void THexApp::start() {
   curs_set(0);           // Remove cursor
   nodelay(stdscr, TRUE); // Remove input delay
   start_color();         // use colors
-  
+
   init_palette();
 
   is_running = true;
 
-  openedFile = BFReader(path, 3, 1000);
   display = DisplayBuffer(0, .2f);
-  cursor = Cursor(0, 0, PALETTE_CURSOR, false);  
+  cursor = Cursor(0, 0, PALETTE_CURSOR, false);
 
   // UI elements
   editor = THexEditor(&display);
@@ -73,16 +70,13 @@ void THexApp::loop() {
       int move = x + y * editor.get_bwidth();
       cursor.move(move);
 
-      int fend = openedFile.size();
-      cursor.limit(fend - 1);
-
       if (cursor.get_end() < display.position)
         display.position -= editor.get_bwidth();
 
       if (cursor.get_end() >= display.position + editor.get_bcount())
         display.position += editor.get_bwidth();
 
-      display.position = min(fend, max(0, display.position));
+      // TODO: clip display position inside file
 
       return true;
     }
@@ -92,10 +86,6 @@ void THexApp::loop() {
 
   while (is_running) {
     refresh();
-
-    display.dynamic_resize(editor.get_bcount());
-    openedFile.read(display.buffer, display.position, display.length);
-    display.eof = openedFile.size();
 
     Event e = imanager.get();
     e.propagate(vector<InputReceiver *>{&cmdline, &cursorControl});
@@ -127,8 +117,12 @@ void THexApp::setup_commands() {
 
     if (input.size() >= 2)
       switch (input.at(1)) {
-        case 'm': color = PALETTE_MAGENTA; break;
-        case 'y': color = PALETTE_YELLOW; break;
+      case 'm':
+        color = PALETTE_MAGENTA;
+        break;
+      case 'y':
+        color = PALETTE_YELLOW;
+        break;
       }
 
     Cursor marquee = cursor;
@@ -138,6 +132,4 @@ void THexApp::setup_commands() {
   });
 }
 
-THexApp::~THexApp() {
-  end();
-}
+THexApp::~THexApp() { end(); }

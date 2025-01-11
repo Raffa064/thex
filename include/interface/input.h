@@ -2,6 +2,7 @@
 
 #include <functional>
 #include <vector>
+
 class InputReceiver;
 
 class Event {

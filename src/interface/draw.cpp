@@ -1,5 +1,5 @@
 #include <cmath>
-#include <draw.h>
+#include <interface/draw.h>
 #include <ncurses.h>
 
 using namespace std;

@@ -1,7 +1,6 @@
-#include "draw.h"
-#include "pallete.h"
-#include "util.h"
-#include <algorithm>
+#include <interface/draw.h>
+#include <interface/pallete.h>
+#include <util.h>
 #include <cstdlib>
 #include <cstring>
 #include <ncurses.h>
