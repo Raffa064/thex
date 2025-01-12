@@ -2,18 +2,15 @@
 
 #include <interface/ui.h>
 #include <ncurses.h>
-#include <thex/cursor.h>
 #include <thex/ui/cmdline.h>
-#include <thex/ui/editor.h>
+#include <thex/ui/hexeditor.h>
 #include <thex/ui/statusbar.h>
 
 class THexApp {
-  std::string path;
-  DisplayBuffer display;
-  Cursor cursor;
-  THexEditor editor;
-  THexStatusBar statusbar;
-  THexCommandLine cmdline;
+  Editor editor;
+  HexEditor hexEditor;
+  StatusBar statusbar;
+  CommandLine cmdline;
 
   bool is_running;
 
@@ -24,6 +21,6 @@ public:
 
   void setup_commands();
 
-  THexApp(std::string path) : path(path) {}
+  THexApp(std::string path);
   ~THexApp();
 };

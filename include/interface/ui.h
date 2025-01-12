@@ -1,27 +1,27 @@
-#pragma once 
+#pragma once
 
-#include <ncurses.h>
 #include <interface/input.h>
+#include <ncurses.h>
 #include <vector>
 
 struct Pair;
 
 struct Pair {
   int x, y;
-  int& width; 
-  int& height;
+  int &width;
+  int &height;
 
   Pair(int x, int y) : x(x), y(y), width(this->x), height(this->y) {}
+
+  bool operator==(Pair &other) { return x = other.x && y == other.y; }
 };
 
-enum Direction {
-  VERTICAL, HORIZONTAL
-};
+enum Direction { VERTICAL, HORIZONTAL };
 
 struct Context {
   int px = 0;
   int py = 0;
-  Pair fill = Pair(0,0);
+  Pair fill = Pair(0, 0);
   Direction alignDir = {};
 };
 
@@ -36,25 +36,26 @@ public:
     size.height = h;
   }
 
+  virtual void resize() { /* Optional callback */ }
+
   virtual void draw() = 0;
 
   UI(Pair pos, Pair size) : pos(pos), size(size) {};
-  
-  UI(int x, int y,  int w, int h) : pos(x, y), size(w, h) {};
-  
+
+  UI(int x, int y, int w, int h) : pos(x, y), size(w, h) {};
+
   UI() : pos(0, 0), size(0, 0) {};
 };
 
-class DebugBox : public UI, public InputReceiver  {
+class DebugBox : public UI, public InputReceiver {
   int color;
+
 public:
   void draw() override;
-  
+
   bool accept(Event) override;
-  
-  DebugBox(int color) {
-    this->color = color;
-  };
+
+  DebugBox(int color) { this->color = color; };
 };
 
 class Separator : public UI {
@@ -73,7 +74,7 @@ public:
 
   void align(Direction);
 
-  void place(UI&, Pair);
+  void place(UI &, Pair);
 };
 
-void uidraw(std::vector<UI*>);
+void uidraw(std::vector<UI *>);

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <thex/app.h>
+#include <util.h>
 
 using namespace std;
 

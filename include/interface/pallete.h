@@ -3,6 +3,8 @@
 #include <ncurses.h>
 #include <ncursesw/ncurses.h>
 
+// TODO: ensure palette colors are sort by importance level
+
 enum Palette {
   PALETTE_NORMAL,
   PALETTE_CURSOR_OVERLAP,
@@ -13,7 +15,8 @@ enum Palette {
   PALETTE_NON_EMPTY,
   PALETTE_EOF,
   PALETTE_INVISIBLE,
-  PALETTE_STATUSBAR
+  PALETTE_STATUSBAR,
+  PALETTE_EMPTY
 };
 
 static void init_palette() {
@@ -24,7 +27,8 @@ static void init_palette() {
   init_pair(PALETTE_CYAN, COLOR_BLACK, COLOR_CYAN);
   init_pair(PALETTE_YELLOW, COLOR_BLACK, COLOR_YELLOW);
   init_pair(PALETTE_NON_EMPTY, COLOR_WHITE, COLOR_BLACK);
-  init_pair(PALETTE_EOF, COLOR_WHITE, COLOR_RED);
+  init_pair(PALETTE_EOF, COLOR_RED, COLOR_RED);
   init_pair(PALETTE_INVISIBLE, COLOR_BLACK, COLOR_WHITE);
   init_pair(PALETTE_STATUSBAR, COLOR_BLACK, COLOR_GREEN);
+  init_pair(PALETTE_EMPTY, COLOR_BLACK, COLOR_BLACK);
 }

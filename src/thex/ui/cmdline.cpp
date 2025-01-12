@@ -1,18 +1,18 @@
-#include <thex/ui/cmdline.h>
+#include <cstdlib>
 #include <interface/draw.h>
 #include <interface/input.h>
-#include <util.h>
-#include <cstdlib>
 #include <ncurses.h>
 #include <ncursesw/ncurses.h>
+#include <thex/ui/cmdline.h>
+#include <util.h>
 
 using namespace std;
 
-void THexCommandLine::add_cmd(string name, CommandFunction fn) {
+void CommandLine::add_cmd(string name, CommandFunction fn) {
   commands.push_back({name, fn});
 }
 
-void THexCommandLine::start_input() {
+void CommandLine::start_input() {
   draw_frect(pos.x, pos.y, size.width, size.height, ' ');
 
   echo();
@@ -37,9 +37,9 @@ void THexCommandLine::start_input() {
   command_output = "Unknown command: '" + input + "'";
 }
 
-void THexCommandLine::draw() { draw_text(pos.x, pos.y, command_output); }
+void CommandLine::draw() { draw_text(pos.x, pos.y, command_output); }
 
-bool THexCommandLine::accept(Event evt) {
+bool CommandLine::accept(Event evt) {
   switch (evt.keycode) {
   case ':':
     start_input();
@@ -54,6 +54,6 @@ bool THexCommandLine::accept(Event evt) {
   return true;
 }
 
-THexCommandLine::THexCommandLine() { buffer = new char[256]; }
+CommandLine::CommandLine() { buffer = new char[256]; }
 
-THexCommandLine::~THexCommandLine() { delete[] buffer; }
+CommandLine::~CommandLine() { delete[] buffer; }

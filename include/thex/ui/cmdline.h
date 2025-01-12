@@ -13,7 +13,7 @@ struct Command {
   CommandFunction fn;
 };
 
-class THexCommandLine : public UI, public InputReceiver {
+class CommandLine : public UI, public InputReceiver {
   char* buffer = nullptr;
   std::string command_output;
   std::vector<Command> commands;
@@ -27,11 +27,11 @@ public:
   void draw() override;
   bool accept(Event) override;
 
-  THexCommandLine();
+  CommandLine();
 
-  ~THexCommandLine();
+  ~CommandLine();
 
-  THexCommandLine& operator=(THexCommandLine other) {
+  CommandLine& operator=(CommandLine other) {
     buffer = other.buffer;
     commands = other.commands;
     command_output = other.command_output;

@@ -1,20 +1,20 @@
 #pragma once
 
+#include "thex/ui/hexeditor.h"
 #include <interface/ui.h>
-#include <thex/cursor.h>
 
-class THexStatusBar : public UI {
-  Cursor *cursor = nullptr;
+class StatusBar : public UI {
+  Editor *editor;
 
 public:
   void draw() override;
 
-  THexStatusBar() {}
+  StatusBar() {}
 
-  THexStatusBar(Cursor *cursor) : cursor(cursor) {}
+  StatusBar(Editor *editor) : editor(editor) {}
 
-  THexStatusBar &operator=(THexStatusBar other) {
-    cursor = other.cursor;
+  StatusBar &operator=(StatusBar other) {
+    editor = other.editor;
 
     return *this;
   }

@@ -1,14 +1,17 @@
-#include <sstream>
-#include <util.h>
+#include <cctype>
 #include <cstddef>
+#include <fstream>
 #include <regex>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <unistd.h>
+#include <util.h>
 #include <vector>
-#include <fstream>
 
 using namespace std;
+
+// TODO: split this file into multiple utility modules
 
 string get_cwd() { // Current Working Dir
   char cwd[1024];
@@ -71,15 +74,24 @@ bool starts_with(string input, string sub) {
   return input.compare(0, sub.size(), sub) == 0;
 }
 
-string to_hex(char ch) {
-  ostringstream stream;
-  stream << hex << setw(2) << setfill('0') << (int) ch;
-  return stream.str();
+string to_upper(string str) {
+  vector<char> chars;
+
+  for (int i = 0; i < str.size(); i++)
+    chars.push_back(toupper(str[i]));
+
+  return string(chars.begin(), chars.end());
 }
 
-string to_hex(char ch, int length) {
-  return padStart(to_hex(ch), length, '0');
+string to_hex(int v, int width) {
+  ostringstream stream;
+  stream << hex << setw(width) << setfill('0') << v;
+  string str = stream.str();
+
+  return to_upper(str);
 }
+
+string to_hex(char ch) { return to_hex(ch, 2); }
 
 string padStart(string input, int length, char ch) {
   while (input.size() < length)
@@ -91,6 +103,6 @@ string padStart(string input, int length, char ch) {
 string padEnd(string input, int length, char ch) {
   while (input.size() < length)
     input += ch;
-   
+
   return input;
 }
