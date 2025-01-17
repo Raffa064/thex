@@ -1,3 +1,4 @@
+#include "thex/editor.h"
 #include <clocale>
 #include <csignal>
 #include <cstdlib>
@@ -10,6 +11,7 @@
 #include <thex/ui/cmdline.h>
 #include <thex/ui/hexeditor.h>
 #include <thex/ui/statusbar.h>
+#include <vector>
 
 #define DEFAULT_PREVIEW_WITH 30
 #define ADDRESS_BAR_WIDTH 8
@@ -77,25 +79,44 @@ void THexApp::end() {
 void THexApp::setup_commands() {
   cmdline.add_cmd("q", [this](string, string &) { is_running = false; });
 
-  cmdline.add_cmd("m", [this](string input, string &) {
-    // TODO: Implement marker
+  cmdline.add_cmd("mr", [this](string, string &output) {
+    vector<Marker *> markers;
+    editor.get_markers(markers);
 
-    // int color = PALETTE_CYAN;
+    vector<Marker *> &edMarkers = editor.markers;
+    for (Marker *m : markers) {
+      editor.markers.erase(remove(edMarkers.begin(), edMarkers.end(), m),
+                           edMarkers.end());
 
-    // if (input.size() >= 2)
-    //   switch (input.at(1)) {
-    //   case 'm':
-    //     color = PALETTE_MAGENTA;
-    //     break;
-    //   case 'y':
-    //     color = PALETTE_YELLOW;
-    //     break;
-    //   }
+      delete m;
+    }
+  });
 
-    // Cursor marquee = cursor;
-    // marquee.set_color(color);
-    // hexEditor.add_cursor(marquee);
-    // cursor.set_selection(false);
+  cmdline.add_cmd("m", [this](string input, string &output) {
+    int color = PALETTE_M0;
+
+    if (input.size() >= 2)
+      switch (input.at(1)) {
+      case 'b':
+        color = PALETTE_M0;
+        break;
+      case 'n':
+        color = PALETTE_M1;
+        break;
+      case 'm':
+        color = PALETTE_M2;
+        break;
+      }
+
+    Marker *marker = new Marker();
+    marker->start = editor.cursor.start;
+    marker->end = editor.cursor.end;
+    marker->color = color;
+
+    editor.markers.push_back(marker);
+    editor.cursor.selection = false;
+
+    output = "Placed marker";
   });
 }
 

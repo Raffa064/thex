@@ -16,6 +16,7 @@ public:
   int get_bcount(); // total displayed bytes count
   int get_color(int, int);
   int get_color(int);
+  void display_cursor();
 
   void resize() override;
   void draw() override;

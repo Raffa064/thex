@@ -67,7 +67,14 @@ void Cursor::set(uint pos) {
   start = end = pos;
 }
 
-void Cursor::move(int pos) { set(get() + pos); }
+void Cursor::move(int pos) {
+  int newPosition = static_cast<int>(get()) + pos;
+
+  if (newPosition < 0)
+    newPosition = 0;
+
+  set(newPosition);
+}
 
 void Cursor::moven(int npos) {
   npos += nibble;
@@ -98,6 +105,11 @@ void Editor::get_markers(vector<Marker *> &out, Range range) {
 }
 
 void Editor::get_markers(vector<Marker *> &out) { get_markers(out, cursor); }
+
+uint Editor::get_fsize() {
+  ifstream file(path, ios::binary | ios::end);
+  return file.tellg();
+}
 
 uint Editor::read(Buffer &buffer, uint pos) {
   // TODO: "Bad file" must be handled

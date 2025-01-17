@@ -19,7 +19,7 @@ int HexEditor::get_color(int addr, int nibble) {
   if (addr < 0 || addr > display.end())
     return PALETTE_EMPTY;
 
-  if (addr == display.end())
+  if (addr == editor->get_fsize())
     return PALETTE_EOF;
 
   Cursor cursor = editor->cursor;
@@ -30,6 +30,15 @@ int HexEditor::get_color(int addr, int nibble) {
     if (addr == cursor.start && nibble == cursor.nibble)
       return PALETTE_CURSOR;
   }
+
+  int m_color = -1;
+  for (Marker *m : editor->markers) {
+    if (m->overlaps(addr))
+      m_color = m->color;
+  }
+
+  if (m_color >= 0)
+    return m_color;
 
   return PALETTE_NORMAL;
 }
@@ -44,13 +53,14 @@ int HexEditor::get_color(int addr) {
 
 void HexEditor::resize() {
   // Resize to the on screen byte count + one more line
-
-  int length = get_bcount() + get_bwidth();
+  int length = get_bcount();
   display.buffer.resize(length);
 }
 
 void HexEditor::draw() {
   editor->read_page(display); // TODO: optmize do read only if necessary
+
+  display_cursor();
 
   int bwidth = get_bwidth(); // line size in bytes
   int line_width = (bwidth * 3) + 1;
@@ -81,10 +91,6 @@ void HexEditor::draw() {
       attroff(A_REVERSE);
     }
   }
-
-  draw_text(0, 0,
-            "[ " + to_string(editor->cursor.get()) + ", " +
-                to_string(editor->cursor.nibble) + " ]");
 }
 
 bool HexEditor::accept(Event evt) {
@@ -119,13 +125,32 @@ bool HexEditor::accept(Event evt) {
 
   cursor.move(moveY);
 
-  if (cursor.selection) { // TODO: make it be handled by move function
-    cursor.moven(moveX);
-  } else {
+  if (cursor.selection)
     cursor.move(moveX);
-  }
+  else
+    cursor.moven(moveX);
+
+  unsigned eof = editor->get_fsize();
+  cursor.set(min(eof - 1, cursor.get())); // Clamp to EOF
 
   return true;
+}
+
+void HexEditor::display_cursor() {
+  unsigned eof = editor->get_fsize();
+  int line_bytes = get_bwidth();
+  int cpos = editor->cursor.get();
+
+  uint newPosition = display.position;
+
+  if (cpos < display.position) {
+    newPosition = (cpos / line_bytes) * line_bytes;
+  }
+
+  if (cpos >= display.end())
+    newPosition += line_bytes;
+
+  display.position = min(eof, max((unsigned)0, newPosition));
 }
 
 void HexEditor::draw_addr(int x, int y, int addr) {

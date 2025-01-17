@@ -28,6 +28,10 @@ void CommandLine::start_input() {
   curs_set(0);
 
   string input = string(buffer);
+
+  if (input.empty())
+    return;
+
   for (auto cmd : commands)
     if (starts_with(input, cmd.name)) {
       cmd.fn(input, command_output);

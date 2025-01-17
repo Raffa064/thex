@@ -39,8 +39,8 @@ struct Range {
 };
 
 struct Cursor : public Range {
-  uint nibble;
-  bool selection;
+  uint nibble = 0;
+  bool selection = false;
 
   uint get();
   void set(uint);
@@ -62,6 +62,8 @@ public:
 
   void get_markers(std::vector<Marker *> &, Range);
   void get_markers(std::vector<Marker *> &);
+
+  uint get_fsize();
 
   // Base I/O functions
   uint read(Buffer &, uint);
