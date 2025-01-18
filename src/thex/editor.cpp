@@ -33,6 +33,15 @@ Buffer::~Buffer() {
     delete[] data;
 }
 
+void Page::set(int fpos, char ch) {
+  int index = fpos - position;
+
+  if (index < 0 || index >= buffer.length)
+    return;
+
+  buffer.data[index] = ch;
+}
+
 char Page::get(int fpos) {
   int index = fpos - position;
 
@@ -122,7 +131,7 @@ uint Editor::read(Buffer &buffer, uint pos) {
 
 void Editor::write(Buffer &buffer, uint pos) {
   // TODO: "Bad file" must be handled
-  ofstream file(path, ios::binary);
+  ofstream file(path, ios::binary | ios::in);
   file.seekp(pos);
   file.write(buffer.data, buffer.length);
 }
@@ -158,6 +167,12 @@ std::string Editor::read_str(uint pos, uint length) {
 std::string Editor::read_str(uint) { // look for null byte
   // TODO: implement this
   return "";
+}
+
+void Editor::write_byte(char ch, uint pos) {
+  Buffer tmp = Buffer(1);
+  tmp.data[0] = ch;
+  write(tmp, pos);
 }
 
 void Editor::insert_num(uint, uint) {} // TODO: num types

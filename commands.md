@@ -1,9 +1,10 @@
 # Editor
 
-| Keys               | Control          |
-|--------------------|------------------|
-| Arroys, j, k, i, l | Move cursor      |
-| s                  | Toggle Selection |
+| Keys               | Control            |
+|--------------------|---------------------|
+| Arroys, j, k, i, l | Move cursor         |
+| s                  | Toggle Selection    |
+| [0-9][a-f]         | Hex Insert (nibble) |
 
 # Command line 
 

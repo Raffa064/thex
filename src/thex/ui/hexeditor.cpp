@@ -14,7 +14,6 @@ int HexEditor::get_bwidth() { return (size.width - FIXED_SIZE) / 4; }
 
 int HexEditor::get_bcount() { return get_bwidth() * size.height; }
 
-// TODO: implement nibble cursor
 int HexEditor::get_color(int addr, int nibble) {
   if (addr < 0 || addr > display.end())
     return PALETTE_EMPTY;
@@ -44,10 +43,10 @@ int HexEditor::get_color(int addr, int nibble) {
 }
 
 int HexEditor::get_color(int addr) {
-  int high_nibble = get_color(addr, 0);
-  int low_nibble = get_color(addr, 1);
+  int high_nibble = get_color(addr, Cursor::HIGH_NIBBLE);
+  int low_nibble = get_color(addr, Cursor::LOW_NIBBLE);
 
-  // Important highlights have higher  value than others
+  // Important highlights have higher value than others
   return max(high_nibble, low_nibble);
 }
 
@@ -59,7 +58,6 @@ void HexEditor::resize() {
 
 void HexEditor::draw() {
   editor->read_page(display); // TODO: optmize do read only if necessary
-
   display_cursor();
 
   int bwidth = get_bwidth(); // line size in bytes
@@ -120,6 +118,30 @@ bool HexEditor::accept(Event evt) {
     cursor.selection = !cursor.selection;
     break;
   default:
+    if (!cursor.selection) {
+      string keys = "0123456789abcdef";
+      int nib = keys.find((char)evt.keycode); // [ 0x0 - 0xF ]
+
+      if (nib != string::npos) {
+        char currByte = display.get(cursor.start);
+
+        if (cursor.nibble == Cursor::HIGH_NIBBLE) {
+          nib <<= 4;
+          currByte &= 0x0F;
+        } else {
+          currByte &= 0xF0;
+        }
+
+        currByte |= nib;
+
+        editor->write_byte(currByte, cursor.start);
+
+        cursor.moven(1);
+
+        return true;
+      }
+    }
+
     return false;
   }
 

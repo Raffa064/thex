@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.31.0)
 # Build options
 option(DEBUG OFF) # Disable compiler optimizations for faster build
 
-set(CMAKE_CXX_STANDARD 14) 
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Necessary for LSP completion
 
 if(DEBUG)

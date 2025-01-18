@@ -27,6 +27,8 @@ struct Page {
   uint read = 0;
 
   char get(int);
+  void set(int, char);
+
   uint end();
 };
 
@@ -39,6 +41,9 @@ struct Range {
 };
 
 struct Cursor : public Range {
+  static const int HIGH_NIBBLE = 0;
+  static const int LOW_NIBBLE = 1;
+
   uint nibble = 0;
   bool selection = false;
 
@@ -77,6 +82,7 @@ public:
   std::string read_str(uint, uint);
   std::string read_str(uint); // look for null byte
 
+  void write_byte(char, uint);
   void insert_num(uint, uint); // TODO: num types
   void insert_str(uint, std::string);
   void fill(uint, uint, char);
