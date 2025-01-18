@@ -2,7 +2,7 @@
 
 Muito obrigado por considerar contribuir para o projeto!
 
-Sua contribuição é sempre bem-vinda, e neste documento vou explicar como você pode fazer isso.
+Toda contribuição é sempre bem-vinda, e neste documento vou explicar como você pode contribuir.
 
 # Issues
 
@@ -23,26 +23,35 @@ Caso queira contribuir com código, você pode seguir o clássico workflow do Gi
 
 - Faça um `fork` do projeto
 - Clone-o para sua máquina local
-- Crie uma nova branch a partir da branch `dev`
+```bash
+$ git clone https://github.com/<Seu Nome>/<Seu fork>
+```
+- Crie uma nova branch a partir da branch `dev` (ou qualquer outro nome que você prefirir)
+```bash
+$ git checkout -b dev
+```
 - Implemente as alterações desejadas
 - Faça commit de suas alterações e envie para o seu fork
+```bash
+$ git commit -m "Added <feature>"
+$ git push origin main # isso envia as alterações para o seu fork
+```
 - Quando tiver pronto, abra um `PR` (Pull Request) do seu branch para a branch `main` deste repositório
 
-Certifique-se de que o seu PR inclua:
+**Certifique-se de que o seu PR inclua:**
 - Código de acordo com os [Padrões do Projeto](#padrões-do-projeto)
 - Uma descrição clara da correção ou feature implementada
-- Referência a qualquer `issue` relacionada
-- Documentação atualizada, se necessário
+- Referência a qualquer `issue` relacionada (se houver)
+- Documentação atualizada (se necessário)
 
-# Padrões de Projeto
+# Padrões do Projeto
 
-Os **padrões do projeto** são regras sobre como o código deve ser organizado para que não haja inconsistências. Caso queira contribuir, é importante segui-los, ou seu PR pode não ser aceito pelos `moderadores`.
+Os **padrões do projeto** são regras sobre como o código deve ser organizado para que não haja inconsistências. Caso queira contribuir, é importante segui-los, ou seu **PR** pode não ser aceito pelos `moderadores`.
 
 **Linguagem**
 Todo o código deve estar em inglês, desde comentários até identificadores de classes, variáveis, etc.
 
 **Formatação para Classes e Structs**
-
 Para melhor legibilidade, toda `classe` ou `struct` deve ser definida e nomeada em *camel case*, e ser o mais simples e descritiva possível, como nos exemplos:
 
 - `Editor` Alguma classe responsável por edição.
@@ -50,7 +59,6 @@ Para melhor legibilidade, toda `classe` ou `struct` deve ser definida e nomeada 
 - `UI` Componentes de interface (User Interface)
 
 **Métodos e Funções**
-
 Todo método ou função precisa ser definido em *snake case* e ser descritivo quanto à sua função.
 
 É de grande valia manter o **Princípio da Responsabilidade Única (SRP)**, onde cada função deve fazer apenas uma única coisa.
@@ -87,11 +95,17 @@ void complexFunction() { ... }
 ```
 
 **Headers**
-
 Para cada arquivo header, dentro de `include`, deve-se criar um arquivo de implementação em `.cpp`. Implementações diretamente no header devem ocorrer apenas quando forem algo muito trivial, como construtores padrão, setters e getters, ou alguma função estática global (como [esta](./include/interface/pallete.h)).
 
-**OBS:** Embora atualmente o projeto omita o nome de parâmetros nos arquivos header, isso não é uma boa prática e, futuramente, isso precisa ser corrigido. Portanto, **não omita os nomes de parâmetros nos arquivos header**.
+**Mensagens de Commit**
+Para uma melhor organização, nós usamos mensagens de commit no formato:
+```git
+Resumo curto do q foi feito
 
----
+- Lista de coisas implementadas
+- Lista de bugs corrigidos
+- Lista de modifições
+```
 
-Essas correções ajustam alguns erros de digitação e melhoram a clareza e consistência do texto. Agora, seu guia está ainda mais claro para os contribuintes!
+> [!TIP] 
+Isso é útil, pois é torna mais simples entender o que está sendo feito a cada commit.

@@ -2,25 +2,23 @@
     <img src="/media/icon.png" alt="THex icon" width="90" height="90"/>
 </p>
 
-<h2 align="center"><b>THex</b></h2>
--
+<h1 align="center"><b>THex</b></h1>
 
-O THex é uma ferramenta de edicão para arquivos banários, via terminal, assim como **bvi** e **hexedit**, porém, com algumas features extras, e um interface vim-like.
+---
 
+O THex é uma poderosa ferramenta de edição para arquivos binários no **terminal**. Ele conta com uma interface que mimetiza editores vim-like, com diversas ferramentas úteis, como preview de dados, marcadores, insercão de strings etc. 
 
-# Features
--
+## Features
 
 - [x] Layout responsivo 
 - [x] Ascii preview
-- [x] Edicão nibble a nibble 
-- [ ] Adicionar marcadores
+- [x] Edição nibble a nibble 
+- [x] Adicionar marcadores
 - [ ] Preview de strings, numeros, flags, etc
 - [ ] Swap files para marcadores e +
 - [ ] Linguagem própria para esquemas e processamento de dados
 
-# Build
--
+## Build
 
 Para gerar uma build, primeiro, clone o repositorio usando git:
 
@@ -34,17 +32,17 @@ Antes de compilar o projeto, certifique-se de que o compilador, cmake e a biblio
 $ sudo apt install clang libncuses-dev cmake
 ```
 
-Após isso, é necessário executar o cmake, para que ele gere os arquivos de configuracão:
+Após isso, é necessário executar o cmake, para que ele gere os arquivos de configuração:
 
 ```bash
 $ cmake .
 ```
 
 > [!TIP]
-Esse comando deve ser executado sempre que adicionar e remover arquivos das pasras scr e inclue, ou quando alterar algo no [CMakeLists.txt](./CMakeLists.txt).
+Esse comando deve ser executado sempre que adicionar e remover arquivos das pastas src e include, ou quando alterar algo no [CMakeLists.txt](./CMakeLists.txt).
 
-**Opcões de build:**
-- `-DDEBUG`: Desabilita otimizacões do compilador, para gerar build mais rápido; ativa warnings e habilita debug com gdb.
+**Opções de build:**
+- `-DDEBUG`: Desabilita otimizações do compilador, para gerar build mais rápido; ativa warnings e habilita debug com gdb.
 
 Após isso, use o seguinte comando para gerar o executável:
 
@@ -52,18 +50,20 @@ Após isso, use o seguinte comando para gerar o executável:
 $ cmake --build .
 ``` 
 
-Pronto, agora é so utilizazr:
+Pronto, agora é so utilizar:
 
 ```$ ./thex test.bin```
 
 > [!IMPORTANT]
 Eu so testei usando o clang-19 pelo Termux (no android), portanto, num ambiente mínimo derivado, não equivalente, do Debian.
-Caso encontre algum problema ao gerar a build ou durante a execucão, por favor, abra uma [issue](https://github.com/Raffa064/thex/issues) descrevendo o problema.
+Caso encontre algum problema ao gerar a build ou durante a execução, por favor, abra uma [issue](https://github.com/Raffa064/thex/issues) descrevendo o problema.
 
-# Contribuicão
+## Contribuição
 
-Caso queira contribuir, leia o [guia de contribuicão](./CONTRIBUTING.pt-br.md), e obrigado por suportar o projeto ;)
+Caso queira contribuir, leia o [guia de contribuição](./CONTRIBUTING.pt-br.md), e obrigado por suportar o projeto ;)
 
-# Achou util? 
+## Licença
 
-Por favor, deixe sua estrela, para dar mais visibilidade ao projeto!
+Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](./LICENSE) para mais detalhes.
+
+O THex possui como a biblioteca [ncurses](https://invisible-island.net/ncurses/) como dependência, licenciada sob a [GNU General Public License (GPL)](https://www.gnu.org/licenses/gpl.html).  O uso desta biblioteca não altera a licença deste software, mas respeita os termos de sua licença.
