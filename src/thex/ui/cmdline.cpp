@@ -6,9 +6,7 @@
 #include <thex/ui/cmdline.h>
 #include <util.h>
 
-using namespace std;
-
-void CommandLine::add_cmd(string name, CommandFunction fn) {
+void CommandLine::add_cmd(std::string name, CommandFunction fn) {
   commands.push_back({name, fn});
 }
 
@@ -27,7 +25,7 @@ void CommandLine::start_input() {
   nodelay(stdscr, TRUE);
   curs_set(0);
 
-  string input = string(buffer);
+  std::string input = std::string(buffer);
 
   if (input.empty())
     return;

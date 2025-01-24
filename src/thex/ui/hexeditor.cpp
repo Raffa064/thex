@@ -8,8 +8,6 @@
 #include <thex/ui/hexeditor.h>
 #include <util.h>
 
-using namespace std;
-
 int HexEditor::get_bwidth() { return (size.width - FIXED_SIZE) / 4; }
 
 int HexEditor::get_bcount() { return get_bwidth() * size.height; }
@@ -47,7 +45,7 @@ int HexEditor::get_color(int addr) {
   int low_nibble = get_color(addr, Cursor::LOW_NIBBLE);
 
   // Important highlights have higher value than others
-  return max(high_nibble, low_nibble);
+  return std::max(high_nibble, low_nibble);
 }
 
 void HexEditor::resize() {
@@ -119,10 +117,10 @@ bool HexEditor::accept(Event evt) {
     break;
   default:
     if (!cursor.selection) {
-      string keys = "0123456789abcdef";
+      std::string keys = "0123456789abcdef";
       int nib = keys.find((char)evt.keycode); // [ 0x0 - 0xF ]
 
-      if (nib != string::npos) {
+      if (nib != std::string::npos) {
         char currByte = display.get(cursor.start);
 
         if (cursor.nibble == Cursor::HIGH_NIBBLE) {
@@ -153,7 +151,7 @@ bool HexEditor::accept(Event evt) {
     cursor.moven(moveX);
 
   unsigned eof = editor->get_fsize();
-  cursor.set(min(eof - 1, cursor.get())); // Clamp to EOF
+  cursor.set(std::min(eof - 1, cursor.get())); // Clamp to EOF
 
   return true;
 }
@@ -172,16 +170,16 @@ void HexEditor::display_cursor() {
   if (cpos >= display.end())
     newPosition += line_bytes;
 
-  display.position = min(eof, max((unsigned)0, newPosition));
+  display.position = std::min(eof, std::max((unsigned)0, newPosition));
 }
 
 void HexEditor::draw_addr(int x, int y, int addr) {
-  string hex_addr = to_hex(addr, ADDR_SIZE);
+  std::string hex_addr = to_hex(addr, ADDR_SIZE);
   draw_text(x, y, hex_addr);
 }
 
 void HexEditor::draw_byte(int x, int y, int addr, char byte) {
-  string hex = to_hex(byte, 2);
+  std::string hex = to_hex(byte, 2);
   for (int nibble = 0; nibble < 2; nibble++) {
     int color = get_color(addr, nibble);
 

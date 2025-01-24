@@ -1,58 +1,38 @@
 #include <cctype>
 #include <cstddef>
-#include <fstream>
+#include <iomanip>
 #include <regex>
 #include <sstream>
-#include <stdexcept>
 #include <string>
 #include <unistd.h>
 #include <util.h>
 #include <vector>
 
-using namespace std;
-
 // TODO: split this file into multiple utility modules
 
-string get_cwd() { // Current Working Dir
+std::string get_cwd() { // Current Working Dir
   char cwd[1024];
   getcwd(cwd, sizeof(cwd));
 
-  return string(cwd);
+  return std::string(cwd);
 }
 
-vector<string> read_file(string path) {
-  ifstream file(path);
-
-  if (!file)
-    throw runtime_error("Can't load file");
-
-  vector<string> lines;
-  string line = "";
-
-  while (file) {
-    getline(file, line);
-    lines.push_back(line);
-  }
-
-  return lines;
-}
-
-string trim(string &input) {
+std::string trim(std::string &input) {
   size_t start = input.find_first_not_of(EMPTY_SPACE);
   size_t end = input.find_last_not_of(EMPTY_SPACE);
 
-  if (start == string::npos)
+  if (start == std::string::npos)
     start = 0;
-  if (end == string::npos)
+  if (end == std::string::npos)
     end = input.size();
 
   return input.substr(start, end - start + 1);
 }
 
-vector<string> split(string input, string pattern) {
-  vector<string> out;
-  smatch match;
-  regex regex(pattern);
+std::vector<std::string> split(std::string input, std::string pattern) {
+  std::vector<std::string> out;
+  std::smatch match;
+  std::regex regex(pattern);
 
   while (regex_search(input, match, regex)) {
     int split_on = match.position();
@@ -67,40 +47,40 @@ vector<string> split(string input, string pattern) {
   return out;
 }
 
-bool starts_with(string input, string sub) {
+bool starts_with(std::string input, std::string sub) {
   if (input.size() < sub.size())
     return false;
 
   return input.compare(0, sub.size(), sub) == 0;
 }
 
-string to_upper(string str) {
-  vector<char> chars;
+std::string to_upper(std::string str) {
+  std::vector<char> chars;
 
   for (int i = 0; i < str.size(); i++)
     chars.push_back(toupper(str[i]));
 
-  return string(chars.begin(), chars.end());
+  return std::string(chars.begin(), chars.end());
 }
 
-string to_hex(int v, int width) {
-  ostringstream stream;
-  stream << hex << setw(width) << setfill('0') << v;
-  string str = stream.str();
+std::string to_hex(int v, int width) {
+  std::ostringstream stream;
+  stream << std::hex << std::setw(width) << std::setfill('0') << v;
+  std::string str = stream.str();
 
   return to_upper(str);
 }
 
-string to_hex(char ch) { return to_hex(ch, 2); }
+std::string to_hex(char ch) { return to_hex(ch, 2); }
 
-string padStart(string input, int length, char ch) {
+std::string padStart(std::string input, int length, char ch) {
   while (input.size() < length)
     input = ch + input;
 
   return input;
 }
 
-string padEnd(string input, int length, char ch) {
+std::string padEnd(std::string input, int length, char ch) {
   while (input.size() < length)
     input += ch;
 

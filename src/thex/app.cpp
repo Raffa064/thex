@@ -16,8 +16,6 @@
 #define DEFAULT_PREVIEW_WITH 30
 #define ADDRESS_BAR_WIDTH 8
 
-using namespace std;
-
 void THexApp::start() {
   setlocale(LC_ALL, "");
 
@@ -55,7 +53,7 @@ void THexApp::loop() {
     refresh();
 
     Event e = imanager.get();
-    e.propagate(vector<InputReceiver *>{&cmdline, &hexEditor});
+    e.propagate(std::vector<InputReceiver *>{&cmdline, &hexEditor});
 
     placer.move({0, 0});
     placer.align(VERTICAL);
@@ -77,13 +75,14 @@ void THexApp::end() {
 }
 
 void THexApp::setup_commands() {
-  cmdline.add_cmd("q", [this](string, string &) { is_running = false; });
+  cmdline.add_cmd("q",
+                  [this](std::string, std::string &) { is_running = false; });
 
-  cmdline.add_cmd("mr", [this](string, string &output) {
-    vector<Marker *> markers;
+  cmdline.add_cmd("mr", [this](std::string, std::string &output) {
+    std::vector<Marker *> markers;
     editor.get_markers(markers);
 
-    vector<Marker *> &edMarkers = editor.markers;
+    std::vector<Marker *> &edMarkers = editor.markers;
     for (Marker *m : markers) {
       editor.markers.erase(remove(edMarkers.begin(), edMarkers.end(), m),
                            edMarkers.end());
@@ -92,7 +91,7 @@ void THexApp::setup_commands() {
     }
   });
 
-  cmdline.add_cmd("m", [this](string input, string &output) {
+  cmdline.add_cmd("m", [this](std::string input, std::string &output) {
     int color = PALETTE_M0;
 
     if (input.size() >= 2)
@@ -120,6 +119,6 @@ void THexApp::setup_commands() {
   });
 }
 
-THexApp::THexApp(string path) { editor = Editor(path); }
+THexApp::THexApp(std::string path) { editor = Editor(path); }
 
 THexApp::~THexApp() { end(); }

@@ -4,8 +4,6 @@
 #include <thex/editor.h>
 #include <thex/ui/statusbar.h>
 
-using namespace std;
-
 #define help_text " Mov: ^i <j vk >l Togg.Selection: s"
 
 void StatusBar::draw() {

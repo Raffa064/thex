@@ -4,22 +4,21 @@
 #include <thex/app.h>
 #include <util.h>
 
-using namespace std;
-
-bool is_valid_path(string path) {
-  return filesystem::exists(path) && filesystem::is_regular_file(path);
+bool is_valid_path(std::string path) {
+  return std::filesystem::exists(path) &&
+         std::filesystem::is_regular_file(path);
 }
 
 int main(int argc, char *argv[]) {
   if (argc != 2) { // 0:thex 1:file_path
-    cout << "An file path is expected" << endl;
+    std::cout << "An file path is expected" << std::endl;
     return 1;
   }
 
-  string path(argv[1]);
+  std::string path(argv[1]);
 
   if (!is_valid_path(path)) {
-    cout << "Invalid file path: " << path << endl;
+    std::cout << "Invalid file path: " << path << std::endl;
     return 1;
   }
 

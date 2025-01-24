@@ -7,8 +7,6 @@
 #include <thex/editor.h>
 #include <vector>
 
-using namespace std;
-
 void Buffer::resize(uint len) {
   if (data != nullptr)
     delete[] data;
@@ -17,11 +15,11 @@ void Buffer::resize(uint len) {
   data = new char[len];
 }
 
-string Buffer::to_string() { return string(data); }
+std::string Buffer::to_string() { return std::string(data); }
 
 Buffer::Buffer(uint length) : length(length) { data = new char[length]; }
 
-Buffer::Buffer(string str) {
+Buffer::Buffer(std::string str) {
   length = str.size() + 1;
   data = new char[length];
 
@@ -69,7 +67,7 @@ uint Cursor::get() {
 
 void Cursor::set(uint pos) {
   if (selection) {
-    end = max(start, pos);
+    end = std::max(start, pos);
     return;
   }
 
@@ -107,22 +105,24 @@ std::string Cursor::to_string() {
          (selection ? ":" + to_hex(end, 8) + " ]" : " ]");
 }
 
-void Editor::get_markers(vector<Marker *> &out, Range range) {
+void Editor::get_markers(std::vector<Marker *> &out, Range range) {
   for (Marker *m : markers)
     if (range.overlaps(*m))
       out.push_back(m);
 }
 
-void Editor::get_markers(vector<Marker *> &out) { get_markers(out, cursor); }
+void Editor::get_markers(std::vector<Marker *> &out) {
+  get_markers(out, cursor);
+}
 
 uint Editor::get_fsize() {
-  ifstream file(path, ios::binary | ios::end);
+  std::ifstream file(path, std::ios::binary | std::ios::end);
   return file.tellg();
 }
 
 uint Editor::read(Buffer &buffer, uint pos) {
   // TODO: "Bad file" must be handled
-  ifstream file(path, ios::binary);
+  std::ifstream file(path, std::ios::binary);
   file.seekg(pos);
   file.read(buffer.data, buffer.length);
 
@@ -131,7 +131,7 @@ uint Editor::read(Buffer &buffer, uint pos) {
 
 void Editor::write(Buffer &buffer, uint pos) {
   // TODO: "Bad file" must be handled
-  ofstream file(path, ios::binary | ios::in);
+  std::ofstream file(path, std::ios::binary | std::ios::in);
   file.seekp(pos);
   file.write(buffer.data, buffer.length);
 }

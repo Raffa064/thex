@@ -1,5 +1,5 @@
 RUN_LOG="./logs.txt"
 RUN_WATCH="run-settings.sh include src CMakeLists.txt"
 RUN_BUILD_COMMAND="(cmake -DDEBUG=ON . && cmake --build .)"
-RUN_EXECUTABLE="thex"
-RUN_COMMAND="./thex test.bin"
+RUN_EXECUTABLE="./thex"
+RUN_ARGUMENTS="test.bin"

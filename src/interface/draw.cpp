@@ -2,9 +2,7 @@
 #include <interface/draw.h>
 #include <ncurses.h>
 
-using namespace std;
-
-#define draw(x,y,ch) mvaddch(y,x,ch)
+#define draw(x, y, ch) mvaddch(y, x, ch)
 
 int currentColor;
 
@@ -13,12 +11,10 @@ void draw_color(int color) {
   attron(COLOR_PAIR(currentColor));
 }
 
-void draw_rcolor() {
-  attroff(COLOR_PAIR(currentColor));
-}
+void draw_rcolor() { attroff(COLOR_PAIR(currentColor)); }
 
 void draw_frect(int px, int py, int w, int h, char ch) {
- for (int y = 0; y < h; y++) {
+  for (int y = 0; y < h; y++) {
     for (int x = 0; x < w; x++) {
       draw(px + x, py + y, ch);
     }

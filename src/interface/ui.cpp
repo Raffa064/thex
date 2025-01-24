@@ -3,14 +3,13 @@
 #include <ncurses.h>
 #include <vector>
 
-using namespace std;
-
 void DebugBox::draw() {
   attron(COLOR_PAIR(color));
   draw_frect(pos.x, pos.y, size.width, size.height, 'X');
   draw_text(pos.x, pos.y,
-            "[ " + to_string(pos.x) + ", " + to_string(pos.y) + ", " +
-                to_string(size.width) + ", " + to_string(size.height) + " ]");
+            "[ " + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ", " +
+                std::to_string(size.width) + ", " +
+                std::to_string(size.height) + " ]");
   attroff(COLOR_PAIR(color));
 }
 
@@ -64,7 +63,7 @@ void UIPlacer::place(UI &ui, Pair bounds) {
   update_fill(ctx);
 }
 
-void uidraw(vector<UI *> uis) {
+void uidraw(std::vector<UI *> uis) {
   for (auto u : uis) {
     draw_frect(u->pos.x, u->pos.y, u->size.width, u->size.height,
                ' '); // clear screen
