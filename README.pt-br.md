@@ -50,10 +50,12 @@ Esse comando deve ser executado sempre que adicionar e remover arquivos das past
 Após isso, use o seguinte comando para gerar o executável:
 ```bash
 $ cmake --build .
-``` 
+```
 
 Pronto, agora é so utilizar:
-```$ ./thex test.bin```
+```bash
+$ ./thex test.bin
+```
 
 > [!IMPORTANT]
 O THex foi criado e testado  apenas usando o clang-19 pelo Termux (no android),  ou seja, num ambiente mínimo derivado (não equivalente) do Debian.

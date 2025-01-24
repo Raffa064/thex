@@ -51,10 +51,13 @@ This command should be called every time you add or remove files frfom `src` or 
 The next step is to run cmake build command, to compile and generate our executable:
 ```bash
 $ cmake --build .
-``` 
+```
 
 Alright, now it's ready to be executed as follows:
-```$ ./thex test.bin```
+
+```bash
+$ ./thex test.bin
+```
 
 > [!IMPORTANT]
 The THex editor was created and tested only on an android device (Termux environment), with clang-19, which is similar (not equivalent) to a Debian environment. 
