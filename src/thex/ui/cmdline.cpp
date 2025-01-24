@@ -6,7 +6,7 @@
 #include <thex/ui/cmdline.h>
 #include <util.h>
 
-void CommandLine::add_cmd(std::string name, CommandFunction fn) {
+void CommandLine::add(std::string name, CommandFunction fn) {
   commands.push_back({name, fn});
 }
 
@@ -32,6 +32,7 @@ void CommandLine::start_input() {
 
   for (auto cmd : commands)
     if (starts_with(input, cmd.name)) {
+      command_output = "";
       cmd.fn(input, command_output);
       return;
     }

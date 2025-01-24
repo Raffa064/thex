@@ -1,4 +1,5 @@
 #include "thex/editor.h"
+#include "util.h"
 #include <clocale>
 #include <csignal>
 #include <cstdlib>
@@ -7,6 +8,7 @@
 #include <interface/ui.h>
 #include <locale.h>
 #include <ncurses.h>
+#include <string>
 #include <thex/app.h>
 #include <thex/ui/cmdline.h>
 #include <thex/ui/hexeditor.h>
@@ -75,10 +77,15 @@ void THexApp::end() {
 }
 
 void THexApp::setup_commands() {
-  cmdline.add_cmd("q",
-                  [this](std::string, std::string &) { is_running = false; });
+#define if_oerr(cond, msg)                                                     \
+  if (cond) {                                                                  \
+    output = msg;                                                              \
+    return;                                                                    \
+  }
 
-  cmdline.add_cmd("mr", [this](std::string, std::string &output) {
+  cmdline.add("q", [this](std::string, std::string &) { is_running = false; });
+
+  cmdline.add("mr", [this](std::string, std::string &output) {
     std::vector<Marker *> markers;
     editor.get_markers(markers);
 
@@ -91,7 +98,7 @@ void THexApp::setup_commands() {
     }
   });
 
-  cmdline.add_cmd("m", [this](std::string input, std::string &output) {
+  cmdline.add("m", [this](std::string input, std::string &output) {
     int color = PALETTE_M0;
 
     if (input.size() >= 2)
@@ -116,6 +123,35 @@ void THexApp::setup_commands() {
     editor.cursor.selection = false;
 
     output = "Placed marker";
+  });
+
+  cmdline.add("jp", [this](std::string input, std::string &output) {
+    auto args = split(input, "\\s+");
+    if_oerr(args.size() != 2, "Invalid arguments");
+
+    std::string jumpBytes = args[1];
+    if_oerr(!is_number(jumpBytes), "'" + jumpBytes + "' is not a valid number");
+
+    editor.cursor.move(std::stoi(jumpBytes));
+  });
+
+  cmdline.add("gt", [this](std::string input, std::string &output) {
+    auto args = split(input, "\\s+");
+    if_oerr(args.size() != 2, "Invalid arguments");
+
+    std::string address = args[1];
+    int addr;
+
+    if (is_number(address))
+      addr = std::stoi(address);
+    else if (is_hex(address))
+      addr = hex_to_int(address);
+    else {
+      output = "'" + address + "' is not a valid address";
+      return;
+    }
+
+    editor.cursor.set(addr);
   });
 }
 

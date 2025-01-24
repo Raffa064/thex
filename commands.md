@@ -1,6 +1,6 @@
 # Editor
 
-| Keys               | Control            |
+| Keys               | Control             |
 |--------------------|---------------------|
 | Arroys, j, k, i, l | Move cursor         |
 | s                  | Toggle Selection    |
@@ -13,8 +13,10 @@
 |  :  | Open command line    |
 |  ;  | Clear command output |
 
-| Command   | Description          |
-|-----------|----------------------|
-| :q        | Quit                 | 
-| :m[bnm]   | Place marker         |
-| :mr       | Remove marker        |
+| Command              | Description          |
+|----------------------|----------------------|
+| :q                   | Quit                 | 
+| :m[bnm]              | Place marker         |
+| :mr                  | Remove marker        |
+| :jp &lt;N&gt;        | Jump **N** bytes     |
+| :gt &lt;addr&gt;     | Go to address        |

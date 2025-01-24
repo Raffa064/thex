@@ -21,7 +21,7 @@ function watch_changes() {
       >$RUN_LOG # clear logs
     fi
     
-    pkill thex
+    pkill $(basename $RUN_EXECUTABLE)
   done
 }
 
@@ -36,7 +36,7 @@ while :; do
   if [ -n "$LOGS" ]; then
     echo "$LOGS"
   else
-    eval "$RUN_COMMAND"
+    eval "$RUN_EXECUTABLE $RUN_ARGUMENTS"
   fi
 
   sleep 1

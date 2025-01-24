@@ -19,6 +19,12 @@ std::string to_hex(int);
 
 std::string to_hex(int, int);
 
-std::string padStart(std::string, int, char = ' ');
+std::string pad_start(std::string, int, char = ' ');
 
-std::string padEnd(std::string, int, char = ' ');
+std::string pad_end(std::string, int, char = ' ');
+
+bool is_number(std::string &);
+
+bool is_hex(std::string &);
+
+int hex_to_int(std::string);
