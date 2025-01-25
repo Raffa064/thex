@@ -1,4 +1,5 @@
 #include "util.h"
+#include <array>
 #include <cstdlib>
 #include <cstring>
 #include <fstream>
@@ -121,19 +122,26 @@ uint Editor::get_fsize() {
 }
 
 uint Editor::read(Buffer &buffer, uint pos) {
-  // TODO: "Bad file" must be handled
   std::ifstream file(path, std::ios::binary);
-  file.seekg(pos);
-  file.read(buffer.data, buffer.length);
+  if (file && file.seekg(pos)) {
+    file.read(buffer.data, buffer.length);
 
-  return file.gcount();
+    return file.gcount();
+  }
+
+  return 0;
 }
 
-void Editor::write(Buffer &buffer, uint pos) {
-  // TODO: "Bad file" must be handled
+bool Editor::write(Buffer &buffer, uint pos) {
   std::ofstream file(path, std::ios::binary | std::ios::in);
-  file.seekp(pos);
-  file.write(buffer.data, buffer.length);
+
+  if (file && file.seekp(pos)) {
+    file.write(buffer.data, buffer.length);
+
+    return true;
+  }
+
+  return false;
 }
 
 void Editor::inject(Buffer &buffer, uint pos) {
@@ -162,11 +170,6 @@ std::string Editor::read_str(uint pos, uint length) {
   read(buffer, pos);
 
   return buffer.to_string();
-}
-
-std::string Editor::read_str(uint) { // look for null byte
-  // TODO: implement this
-  return "";
 }
 
 void Editor::write_byte(char ch, uint pos) {

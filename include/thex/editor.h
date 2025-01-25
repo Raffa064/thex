@@ -72,7 +72,7 @@ public:
 
   // Base I/O functions
   uint read(Buffer &, uint);
-  void write(Buffer &, uint);
+  bool write(Buffer &, uint);
   void inject(Buffer &, uint);
   void remove(uint, uint);
 
@@ -80,7 +80,6 @@ public:
   void read_page(Page &);
   uint read_num(uint); // TODO: make it work form multiple num types
   std::string read_str(uint, uint);
-  std::string read_str(uint); // look for null byte
 
   void write_byte(char, uint);
   void insert_num(uint, uint); // TODO: num types

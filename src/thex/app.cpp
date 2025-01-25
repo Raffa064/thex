@@ -96,6 +96,8 @@ void THexApp::setup_commands() {
 
       delete m;
     }
+
+    editor.cursor.selection = false;
   });
 
   cmdline.add("m", [this](std::string input, std::string &output) {
