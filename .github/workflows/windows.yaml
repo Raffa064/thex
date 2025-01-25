@@ -1,0 +1,31 @@
+name: Build for windows
+
+on: 
+  workflow_dispatch:
+  pull_request:
+    branches: [ "main" ]
+  push: 
+    branches: [ "main" ]
+
+jobs:
+  windows-build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup CMake
+        uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake_version: 3.31.0
+
+      - name: Download deps
+        run: |
+          choco install ncurses
+
+      - name: Configure CMake
+        run: |
+          cmake .
+
+      - name: Build
+        run: cmake --build . 
