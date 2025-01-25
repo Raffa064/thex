@@ -11,7 +11,11 @@
 
 O THex é uma poderosa ferramenta de edição para arquivos binários no **terminal**. Ele conta com uma interface que mimetiza editores vim-like, com diversas ferramentas úteis, como preview de dados, marcadores, insercão de strings etc. 
 
-![screenshot](./media/screenshot.jpg)
+<div align="center">
+    <img alt="screenshot" src="./media/screenshot-1.jpg" width="45%"/>
+    <img alt="screenshot" src="./media/screenshot-2.jpg" width="45%"/>
+</div>
+
 
 ## Features
 

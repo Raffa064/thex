@@ -12,7 +12,10 @@
 THex is a powerful binary editing tool designed for the **terminal**. 
 It features a vim-like interface, and offers a variety of useful tools, such as markers, data preview, and string insertion.
 
-![screenshot](./media/screenshot.jpg)
+<div align="center">
+    <img alt="screenshot" src="./media/screenshot-1.jpg" width="45%"/>
+    <img alt="screenshot" src="./media/screenshot-2.jpg" width="45%"/>
+</div>
 
 ## Features
 
