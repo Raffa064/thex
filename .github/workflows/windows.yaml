@@ -31,7 +31,7 @@ jobs:
 
       - name: Running CMake
         run: |
-          cmake -G "WinGW Makefiles" .
+          cmake -G "MinGW Makefiles" .
 
       - name: Build
         run: wingw32-make
