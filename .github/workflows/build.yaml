@@ -17,7 +17,6 @@ jobs:
       fail-fast: true
       matrix:
         debug: [ "ON", "OFF" ]
-        build: [ "debug", "release" ]
 
     steps:
     - uses: actions/checkout@v4
@@ -30,16 +29,24 @@ jobs:
         
     - name: Running CMake
       run: |
-          export CXX=clang++
-          export CC=clang
-          cmake . -DDEBUG="${{ matrix.debug }}"
+        export CXX=clang++
+        export CC=clang
+        cmake . -DDEBUG="${{ matrix.debug }}"
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: cmake --build .
 
+    - name: "Set label"
+      run: |
+        if [ "${{ matrix.debug }}" == "ON" ]; then
+          echo "label=debug" >> $GITHUB_ENV
+        else
+          echo "label=release" >> $GITHUB_ENV
+        fi
+
     - name: Creating Artifactic
       uses: actions/upload-artifact@v3
       with:
-        name: thex_linux_x86-64_${{ matrix.build }}
+        name: thex_linux_x86-64_${{ env.label }}
         path: ./thex
