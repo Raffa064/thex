@@ -31,7 +31,7 @@ jobs:
 
       - name: Running CMake
         run: |
-          cmake -G "MinGW Makefiles" -DCURSES_LIBRARY="C:/msys64/mingw64/lib/libncurses.a" -DCURSES_INCLUDE_PATH="C:/msys64/mingw64/include" .
+          cmake -G "MinGW Makefiles" -DCURSES_LIBRARY="C:/msys64/mingw64/lib/libncurses.a" -DCURSES_INCLUDE_PATH="C:/msys64/mingw64/include" -DCMAKE_CXX_FLAGS="-I C:/msys64/mingw64/include" .
 
       - name: Build
         run: mingw32-make

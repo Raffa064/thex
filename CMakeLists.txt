@@ -32,12 +32,6 @@ else()
   )
 
   if(WIN32)
-    set(CURSES_LIBRARY "C:/msys64/mingw64/lib/libncurses.a")
-    set(CURSES_INCLUDE_PATH "C:/msys64/mingw64/include")
-    find_package(Curses REQUIRED)
-    include_directories(${CURSES_INCLUDE_PATH})
-    target_link_libraries(thex ${CURSES_LIBRARY})
-
     set(CMAKE_INSTALL_PREFIX "C:/Program Files/thex")
   elseif(UNIX)
     set(CMAKE_INSTALL_PREFIX "/usr/local")
