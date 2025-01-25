@@ -31,10 +31,10 @@ jobs:
 
       - name: Running CMake
         run: |
-          cmake -G "MinGW Makefiles" .
+          cmake -G "MinGW Makefiles" -DCURSES_LIBRARY="C:/msys64/mingw64/lib/libncurses.a" -DCURSES_INCLUDE_PATH="C:/msys64/mingw64/include" .
 
       - name: Build
-        run: wingw32-make
+        run: mingw32-make
   
       - name: Creating Artifactic
         uses: actions/upload-artifact@v3
