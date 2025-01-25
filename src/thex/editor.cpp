@@ -1,5 +1,4 @@
 #include "util.h"
-#include <array>
 #include <cstdlib>
 #include <cstring>
 #include <fstream>

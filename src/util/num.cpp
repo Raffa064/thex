@@ -4,7 +4,7 @@
 #include <string>
 
 const std::regex REGEX_NUMBER("[\\-\\+]?[0-9]+");
-const std::regex REGEX_HEX("(0x)?[0-9a-b]+", std::regex::icase);
+const std::regex REGEX_HEX("(0x)?[0-9a-f]+", std::regex::icase);
 
 bool is_number(std::string &input) {
   return std::regex_match(input, REGEX_NUMBER);

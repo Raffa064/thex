@@ -143,15 +143,20 @@ void THexApp::setup_commands() {
 
     std::string address = args[1];
     int addr;
+    uint eof = editor.get_fsize() - 1;
 
     if (is_number(address))
       addr = std::stoi(address);
     else if (is_hex(address))
       addr = hex_to_int(address);
+    else if (address == "end" || address == "eof")
+      addr = eof;
     else {
       output = "'" + address + "' is not a valid address";
       return;
     }
+
+    addr = std::min<int>(eof, std::max(0, addr));
 
     editor.cursor.set(addr);
   });

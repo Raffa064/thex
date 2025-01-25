@@ -56,7 +56,7 @@ void HexEditor::resize() {
 
 void HexEditor::draw() {
   editor->read_page(display); // TODO: optmize do read only if necessary
-  display_cursor();
+  follow_cursor();
 
   int bwidth = get_bwidth(); // line size in bytes
   int line_width = (bwidth * 3) + 1;
@@ -145,30 +145,42 @@ bool HexEditor::accept(Event evt) {
 
   cursor.move(moveY);
 
+  unsigned eof = editor->get_fsize();
+
   if (cursor.selection)
     cursor.move(moveX);
-  else
-    cursor.moven(moveX);
+  else {
+    if (cursor.get() == 0 && moveX < 0) {
+      cursor.start = 0;
+      cursor.nibble = Cursor::LOW_NIBBLE;
+    } else if (cursor.get() == (eof - 1) && moveX > 0) {
+      cursor.start = eof - 1;
+      cursor.nibble = Cursor::HIGH_NIBBLE;
+    }
 
-  unsigned eof = editor->get_fsize();
+    cursor.moven(moveX);
+  }
+
   cursor.set(std::min(eof - 1, cursor.get())); // Clamp to EOF
 
   return true;
 }
 
-void HexEditor::display_cursor() {
+void HexEditor::follow_cursor() {
   unsigned eof = editor->get_fsize();
   int line_bytes = get_bwidth();
   int cpos = editor->cursor.get();
 
   uint newPosition = display.position;
+  uint cursor_line = (cpos / line_bytes) * line_bytes;
+  uint display_bytes = display.buffer.length;
 
   if (cpos < display.position) {
-    newPosition = (cpos / line_bytes) * line_bytes;
+    newPosition = cursor_line;
   }
 
   if (cpos >= display.end())
-    newPosition += line_bytes;
+    newPosition = cursor_line - display_bytes + line_bytes;
 
   display.position = std::min(eof, std::max((unsigned)0, newPosition));
 }

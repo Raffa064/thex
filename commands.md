@@ -13,10 +13,10 @@
 |  :  | Open command line    |
 |  ;  | Clear command output |
 
-| Command              | Description          |
-|----------------------|----------------------|
-| :q                   | Quit                 | 
-| :m[bnm]              | Place marker         |
-| :mr                  | Remove marker        |
-| :jp &lt;N&gt;        | Jump **N** bytes     |
-| :gt &lt;addr&gt;     | Go to address        |
+| Command                      | Description          |
+|------------------------------|----------------------|
+| :q                           | Quit                 | 
+| :m[bnm]                      | Place marker         |
+| :mr                          | Remove marker        |
+| :jp &lt;N&gt;                | Jump **N** bytes     |
+| :gt &lt;addr|end|eof&gt;     | Go to address        |
