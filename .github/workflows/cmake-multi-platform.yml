@@ -15,9 +15,13 @@ jobs:
       run: |
         sudo apt update 
         sudo apt install -y libncurses-dev clang cmake
-
+        clang --version
+        
     - name: Running CMake
-      run: cmake .
+      run: |
+          export CXX=clang++
+          export CC=clang
+          cmake .
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
