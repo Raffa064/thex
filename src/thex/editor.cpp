@@ -116,7 +116,8 @@ void Editor::get_markers(std::vector<Marker *> &out) {
 }
 
 uint Editor::get_fsize() {
-  std::ifstream file(path, std::ios::binary | std::ios::end);
+  std::ifstream file(path, std::ios::binary);
+  file.seekg(0, std::ios::end);
   return file.tellg();
 }
 
