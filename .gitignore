@@ -5,6 +5,7 @@ Makefile
 CMakeCache.txt
 compile_commands.json
 logs.txt
+install_manifest.txt
 
 # Targets
 /thex
