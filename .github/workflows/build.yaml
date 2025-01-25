@@ -1,13 +1,24 @@
 # This starter workflow is for a CMake project running on multiple platforms. There is a different starter workflow if you just want a single platform.
 # See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-single-platform.yml
-name: CMake on multiple platforms
+name: Build
 
-on:
-  workflow_dispatch:
+on: 
+  workflow_dispatch: 
+  pull_request: 
+    branches: [ "main" ]
+  push: 
+    branches: [ "main" ]
 
 jobs:
-  build:
+  linux-build:
     runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: true
+      matrix:
+        debug: [ "ON", "OFF" ]
+        build: [ "debug", "release" ]
+
     steps:
     - uses: actions/checkout@v4
 
@@ -21,7 +32,7 @@ jobs:
       run: |
           export CXX=clang++
           export CC=clang
-          cmake .
+          cmake . -DDEBUG="${{ matrix.debug }}"
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
@@ -30,5 +41,5 @@ jobs:
     - name: Creating Artifactic
       uses: actions/upload-artifact@v3
       with:
-        name: linux-x86
+        name: thex_linux_x86-64_${{ matrix.build }}
         path: ./thex
