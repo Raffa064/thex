@@ -1,5 +1,6 @@
 #include "thex/editor.h"
 #include "util.h"
+#include <algorithm>
 #include <clocale>
 #include <csignal>
 #include <cstdlib>
@@ -91,7 +92,7 @@ void THexApp::setup_commands() {
 
     std::vector<Marker *> &edMarkers = editor.markers;
     for (Marker *m : markers) {
-      editor.markers.erase(remove(edMarkers.begin(), edMarkers.end(), m),
+      editor.markers.erase(std::remove(edMarkers.begin(), edMarkers.end(), m),
                            edMarkers.end());
 
       delete m;
