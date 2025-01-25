@@ -31,4 +31,13 @@ jobs:
 
       - name: Running CMake
         run: |
-          cmake .
+          cmake -G "WinGW Makefiles" .
+
+      - name: Build
+        run: wingw32-make
+  
+      - name: Creating Artifactic
+        uses: actions/upload-artifact@v3
+        with:
+          name: thex_windows_x86-64
+          path: ./thex.exe
