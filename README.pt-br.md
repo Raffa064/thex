@@ -28,6 +28,18 @@ O THex é uma poderosa ferramenta de edição para arquivos binários no **termi
 - [ ] Swap files para marcadores e +
 - [ ] Linguagem própria para esquemas e processamento de dados
 
+## Instalação
+
+Se você estiver usando um dispositivo **Linux** você pode baixar uma versão executavel diretamente da aba [actions](https://githuhb.com/Raffa064/thex/actions).
+
+Caso estiver em outras plataformas, como **Android** (com Termux), será necessário fazer (compilar apartir do código fonte)[#build].
+
+**Plataformas Suportadas**  
+- [x] **Linux**: Instale diretamente pelo gerenciador de pacotes ou compile a partir do código fonte.  
+- [x] **Android (Termux)**: Compile a partir do código fonte.  
+- [x] **MacOS**: Não oficialmente testado, mas pode funcionar se compilado a partir do código fonte.  
+- [ ] **Windows**: Não oficialmente suportado. Para compilar a partir do código fonte, são necessárias mudanças significativas, como trocar de **ncurses** para **PDCurses** e ajustar as configurações do compilador.
+
 ## Build
 
 Para gerar uma build, primeiro, clone o repositorio usando git:

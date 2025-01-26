@@ -28,6 +28,18 @@ It features a vim-like interface, and offers a variety of useful tools, such as 
 - [ ] Swap files for store markers
 - [ ] Custom language for data processing schemas 
 
+## Installation
+
+If you're using a **Linux** device, you can download the latest version of THex from [actions](https://github.com/Raffa064/thex/actions).
+
+If you're in other platforms, like **Android** (with Termux), you'll need to [build](#build) it from source.
+
+**Supported Platforms**  
+- [x] **Linux**: Install directly via package manager or build from source.  
+- [x] **Android (Termux)**: Build from source.
+- [x] **MacOS**: Not officially tested, but may work if built from source.  
+- [ ] **Windows**: Not officially supported. To build from source, significant changes are required, such as switching from **ncurses** to **PDCurses** and adjusting the compiler settings.
+
 ## Build
 
 First of all, clone this repository to your local machine:
