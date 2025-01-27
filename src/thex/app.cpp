@@ -78,89 +78,115 @@ void THexApp::end() {
 }
 
 void THexApp::setup_commands() {
-#define if_oerr(cond, msg)                                                     \
+#define iferr(cond, msg)                                                       \
   if (cond) {                                                                  \
-    output = msg;                                                              \
-    return;                                                                    \
+    return (std::string)(msg);                                                 \
   }
 
-  cmdline.add("q", [this](std::string, std::string &) { is_running = false; });
+  cmdline.add(
+      "q", cmd_func {
+        is_running = false;
+        return "Quit";
+      });
 
-  cmdline.add("mr", [this](std::string, std::string &output) {
-    std::vector<Marker *> markers;
-    editor.get_markers(markers);
+  cmdline.add(
+      "mr", cmd_func {
+        std::vector<Marker *> markers;
+        editor.get_markers(markers);
 
-    std::vector<Marker *> &edMarkers = editor.markers;
-    for (Marker *m : markers) {
-      editor.markers.erase(std::remove(edMarkers.begin(), edMarkers.end(), m),
-                           edMarkers.end());
+        std::vector<Marker *> &edMarkers = editor.markers;
+        for (Marker *m : markers) {
+          edMarkers.erase(std::remove(edMarkers.begin(), edMarkers.end(), m),
+                          edMarkers.end());
 
-      delete m;
-    }
+          delete m;
+        }
 
-    editor.cursor.selection = false;
-  });
+        editor.cursor.selection = false;
 
-  cmdline.add("m", [this](std::string input, std::string &output) {
-    int color = PALETTE_M0;
+        return "Removed " + std::to_string(markers.size()) + " markers";
+      });
 
-    if (input.size() >= 2)
-      switch (input.at(1)) {
-      case 'b':
-        color = PALETTE_M0;
-        break;
-      case 'n':
-        color = PALETTE_M1;
-        break;
-      case 'm':
-        color = PALETTE_M2;
-        break;
-      }
+  cmdline.add(
+      "m[bnm]", cmd_func {
+        cmd_noargs();
 
-    Marker *marker = new Marker();
-    marker->start = editor.cursor.start;
-    marker->end = editor.cursor.end;
-    marker->color = color;
+        int color = PALETTE_M0;
 
-    editor.markers.push_back(marker);
-    editor.cursor.selection = false;
+        if (args[0].size() >= 2)
+          switch (args[0].at(1)) {
+          case 'b':
+            color = PALETTE_M0;
+            break;
+          case 'n':
+            color = PALETTE_M1;
+            break;
+          case 'm':
+            color = PALETTE_M2;
+            break;
+          }
 
-    output = "Placed marker";
-  });
+        Marker *marker = new Marker();
+        marker->start = editor.cursor.start;
+        marker->end = editor.cursor.end;
+        marker->color = color;
 
-  cmdline.add("jp", [this](std::string input, std::string &output) {
-    auto args = split(input, "\\s+");
-    if_oerr(args.size() != 2, "Invalid arguments");
+        editor.markers.push_back(marker);
+        editor.cursor.selection = false;
 
-    std::string jumpBytes = args[1];
-    if_oerr(!is_number(jumpBytes), "'" + jumpBytes + "' is not a valid number");
+        return std::string("Placed marker");
+      });
 
-    editor.cursor.move(std::stoi(jumpBytes));
-  });
+  cmdline.add(
+      "jp", cmd_func {
+        cmd_limit_args({2});
 
-  cmdline.add("gt", [this](std::string input, std::string &output) {
-    auto args = split(input, "\\s+");
-    if_oerr(args.size() != 2, "Invalid arguments");
+        std::string jumpBytes = args[1];
+        iferr(!is_number(jumpBytes),
+              "'" + jumpBytes + "' is not a valid number");
 
-    std::string address = args[1];
-    int addr;
-    uint eof = editor.get_fsize() - 1;
+        editor.cursor.move(std::stoi(jumpBytes));
 
-    if (is_number(address))
-      addr = std::stoi(address);
-    else if (is_hex(address))
-      addr = hex_to_int(address);
-    else if (address == "end" || address == "eof")
-      addr = eof;
-    else {
-      output = "'" + address + "' is not a valid address";
-      return;
-    }
+        return "Jumped " + jumpBytes + " bytes to " + editor.cursor.to_string();
+      });
 
-    addr = std::min<int>(eof, std::max(0, addr));
+  cmdline.add(
+      "gt", cmd_func {
+        cmd_limit_args({2});
 
-    editor.cursor.set(addr);
-  });
+        std::string address = args[1];
+        int addr;
+        uint eof = editor.get_fsize() - 1;
+
+        if (is_number(address))
+          addr = std::stoi(address);
+        else if (is_hex(address))
+          addr = hex_to_int(address);
+        else if (address == "end" || address == "eof")
+          addr = eof;
+        else {
+          return "'" + address + "' is not a valid address";
+        }
+
+        addr = std::min<int>(eof, std::max(0, addr));
+
+        editor.cursor.set(addr);
+        return "Go to 0x" + to_hex(addr, 8);
+      });
+
+  cmdline.add(
+      "s", cmd_func {
+        std::string input;
+
+        if (raw.empty())
+          input = cmdline.start_input("str: "); // limit to selection
+        else
+          input = raw;
+
+        editor.insert_str(editor.cursor.start, input);
+
+        return "Inserted string: '" + input + "'";
+      });
 }
 
 THexApp::THexApp(std::string path) { editor = Editor(path); }

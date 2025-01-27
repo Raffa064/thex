@@ -20,3 +20,4 @@
 | :mr                          | Remove marker        |
 | :jp &lt;N&gt;                | Jump **N** bytes     |
 | :gt &lt;addr|end|eof&gt;     | Go to address        |
+| :s &lt;text&gt;              | Insert string/text   |

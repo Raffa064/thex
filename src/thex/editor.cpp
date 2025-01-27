@@ -20,10 +20,10 @@ std::string Buffer::to_string() { return std::string(data); }
 Buffer::Buffer(uint length) : length(length) { data = new char[length]; }
 
 Buffer::Buffer(std::string str) {
-  length = str.size() + 1;
+  length = str.size();
   data = new char[length];
 
-  memcpy(data, str.data(), length);
+  memcpy(data, str.c_str(), length);
 }
 
 Buffer::~Buffer() {
