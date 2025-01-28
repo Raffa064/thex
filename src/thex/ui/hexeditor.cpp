@@ -12,11 +12,6 @@ int HexEditor::get_bwidth() { return (size.width - FIXED_SIZE) / 4; }
 
 int HexEditor::get_bcount() { return get_bwidth() * size.height; }
 
-int HexEditor::get_line_addr(int byte_addr) {
-  int bwidth = get_bwidth();
-  return (byte_addr / bwidth) * bwidth;
-}
-
 int HexEditor::get_color(int addr, int nibble) {
   if (addr < 0 || addr > display.end())
     return PALETTE_EMPTY;
