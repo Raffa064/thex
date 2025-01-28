@@ -86,8 +86,7 @@ char Page::get(int fpos) {
 uint Page::end() { return position + read; }
 
 bool Range::overlaps(Range other) {
-  return (start >= other.start && start <= other.end) ||
-         (end >= other.start && end <= other.end);
+  return !(start > other.end || end < other.start);
 }
 
 bool Range::overlaps(uint pos) { return start <= pos && end >= pos; }

@@ -14,6 +14,8 @@ public:
 
   int get_bwidth(); // byte count per row
   int get_bcount(); // total displayed bytes count
+  int get_line_addr(int byte_addr);
+
   int get_color(int addr, int nibble);
   int get_color(int addr);
 

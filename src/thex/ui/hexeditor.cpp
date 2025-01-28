@@ -12,6 +12,11 @@ int HexEditor::get_bwidth() { return (size.width - FIXED_SIZE) / 4; }
 
 int HexEditor::get_bcount() { return get_bwidth() * size.height; }
 
+int HexEditor::get_line_addr(int byte_addr) {
+  int bwidth = get_bwidth();
+  return (byte_addr / bwidth) * bwidth;
+}
+
 int HexEditor::get_color(int addr, int nibble) {
   if (addr < 0 || addr > display.end())
     return PALETTE_EMPTY;
@@ -183,12 +188,19 @@ void HexEditor::follow_cursor() {
   if (cpos >= display.end())
     newPosition = cursor_line - display_bytes + line_bytes;
 
-  display.position = std::min(eof, std::max((unsigned)0, newPosition));
+  display.position = std::min(eof, std::max<unsigned>(0, newPosition));
 }
 
 void HexEditor::draw_addr(int x, int y, int addr) {
+  Range line = {(uint)addr, (uint)(addr + get_bwidth() - 1)};
+  bool overlaps_cursor = editor->cursor.overlaps(line);
+
+  int color = overlaps_cursor ? PALETTE_CURSOR_LINE : PALETTE_NORMAL;
   std::string hex_addr = to_hex(addr, ADDR_SIZE);
+
+  draw_color(color);
   draw_text(x, y, hex_addr);
+  draw_rcolor();
 }
 
 void HexEditor::draw_byte(int x, int y, int addr, char byte) {
