@@ -108,7 +108,7 @@ void THexApp::setup_commands() {
       });
 
   cmdline.add(
-      "m[bnm]", cmd_func {
+      "m[bnm]?", cmd_func {
         cmd_noargs();
 
         int color = PALETTE_M0;
@@ -214,6 +214,35 @@ void THexApp::setup_commands() {
         }
 
         return std::string("Not found: " + raw);
+      });
+
+  cmdline.add(
+      "select", cmd_func {
+        cmd_limit_args({2});
+
+        if (is_number(args[1])) {
+          int select = std::stoi(args[1]);
+          editor.cursor.selection = true;
+          editor.cursor.end = editor.cursor.end + select - 1;
+        }
+
+        return std::string("Selection must be a positive number");
+      });
+
+  cmdline.add(
+      "mv", cmd_func {
+        cmd_limit_args({2});
+
+        if (is_number(args[1])) {
+          int amount = std::stoi(args[1]);
+
+          editor.cursor.start += amount;
+          editor.cursor.end += amount;
+
+          return std::string("Moved " + std::to_string(amount) + " bytes");
+        }
+
+        return std::string("Invalid input: '" + args[1] + "'");
       });
 }
 

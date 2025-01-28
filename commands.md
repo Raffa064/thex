@@ -22,3 +22,4 @@
 | :gt &lt;addr|end|eof&gt;            | Go to address          |
 | :s &lt;text&gt;                     | Insert string/text     |
 | :next &lt;"text"|*hex sequence*&gt; | Jump to the next match |
+| :select &lt;byte count&gt;          | Selects **N** bytes    |
