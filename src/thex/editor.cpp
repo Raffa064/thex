@@ -26,9 +26,43 @@ Buffer::Buffer(std::string str) {
   memcpy(data, str.c_str(), length);
 }
 
+Buffer::Buffer(const Buffer &other) {
+  length = other.length;
+  data = new char[length];
+
+  memcpy(data, other.data, length);
+}
+
 Buffer::~Buffer() {
   if (data != nullptr)
     delete[] data;
+}
+
+bool Buffer::operator==(Buffer &other) {
+  if (other.length != length)
+    return false;
+
+  for (int i = 0; i < length; i++) {
+    if (other.data[i] != data[i])
+      return false;
+  }
+
+  return true;
+}
+
+Buffer &Buffer::operator=(const Buffer &other) {
+  if (this == &other)
+    return *this;
+
+  if (data != nullptr)
+    delete[] data;
+
+  length = other.length;
+  data = new char[length];
+
+  memcpy(data, other.data, length);
+
+  return *this;
 }
 
 void Page::set(int fpos, char ch) {
@@ -196,6 +230,21 @@ void Editor::fill(uint pos, uint length, char ch) {
 
 // wipe is basically a fill with 0x00
 void Editor::wipe(uint pos, uint length) { fill(pos, length, 0); }
+
+uint Editor::find(uint start, Buffer sequence) {
+  Buffer tmp(sequence.length);
+
+  int pos = start;
+  while (true) {
+    if (read(tmp, pos) < sequence.length)
+      return start;
+
+    if (tmp == sequence)
+      return pos;
+
+    pos++;
+  }
+}
 
 void Editor::inject_num(uint, uint) {} // TODO: num types
 

@@ -77,8 +77,9 @@ void HexEditor::draw() {
         byte = display.get(byte_addr);
 
         // Check for ASCII printable chars
-        if (byte < 0x20 || byte > 0x7E)
+        if (is_non_printable(byte)) {
           attron(A_REVERSE);
+        }
       }
 
       draw_byte(x + (b_index * 3), y, byte_addr, byte);
@@ -192,6 +193,7 @@ void HexEditor::draw_addr(int x, int y, int addr) {
 
 void HexEditor::draw_byte(int x, int y, int addr, char byte) {
   std::string hex = to_hex(byte, 2);
+
   for (int nibble = 0; nibble < 2; nibble++) {
     int color = get_color(addr, nibble);
 
@@ -205,6 +207,6 @@ void HexEditor::draw_char(int x, int y, int addr, char byte) {
   int color = get_color(addr);
 
   draw_color(color);
-  mvaddch(y, x, byte);
+  mvaddch(y, x, is_non_printable(byte) ? '.' : byte);
   draw_rcolor();
 }

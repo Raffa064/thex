@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <cstring>
 #include <string>
 #include <vector>
 
@@ -17,8 +18,12 @@ struct Buffer {
 
   Buffer(uint);
   Buffer(std::string);
+  Buffer(const Buffer &other);
 
   ~Buffer();
+
+  bool operator==(Buffer &other);
+  Buffer &operator=(const Buffer &other);
 };
 
 struct Page {
@@ -86,6 +91,8 @@ public:
   void insert_str(uint, std::string);
   void fill(uint, uint, char);
   void wipe(uint, uint);
+
+  uint find(uint, Buffer);
 
   void inject_num(uint, uint); // TODO: num types
   void inject_str(uint, std::string);

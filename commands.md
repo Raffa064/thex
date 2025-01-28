@@ -13,11 +13,12 @@
 |  :  | Open command line    |
 |  ;  | Clear command output |
 
-| Command                      | Description          |
-|------------------------------|----------------------|
-| :q                           | Quit                 | 
-| :m[bnm]                      | Place marker         |
-| :mr                          | Remove marker        |
-| :jp &lt;N&gt;                | Jump **N** bytes     |
-| :gt &lt;addr|end|eof&gt;     | Go to address        |
-| :s &lt;text&gt;              | Insert string/text   |
+| Command                             | Description            |
+|-------------------------------------|------------------------|
+| :q                                  | Quit                   | 
+| :m[bnm]                             | Place marker           |
+| :mr                                 | Remove marker          |
+| :jp &lt;N&gt;                       | Jump **N** bytes       |
+| :gt &lt;addr|end|eof&gt;            | Go to address          |
+| :s &lt;text&gt;                     | Insert string/text     |
+| :next &lt;"text"|*hex sequence*&gt; | Jump to the next match |

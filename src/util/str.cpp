@@ -1,12 +1,12 @@
 #include <cctype>
 #include <cstddef>
-#include <iomanip>
 #include <regex>
-#include <sstream>
 #include <string>
 #include <unistd.h>
 #include <util.h>
 #include <vector>
+
+const std::string EMPTY_SPACE = " \n\t\r\f\v";
 
 std::string trim(std::string &input) {
   size_t start = input.find_first_not_of(EMPTY_SPACE);
@@ -53,16 +53,6 @@ std::string to_upper(std::string str) {
 
   return std::string(chars.begin(), chars.end());
 }
-
-std::string to_hex(int v, int width) {
-  std::ostringstream stream;
-  stream << std::hex << std::setw(width) << std::setfill('0') << v;
-  std::string str = stream.str();
-
-  return to_upper(str);
-}
-
-std::string to_hex(char ch) { return to_hex(ch, 2); }
 
 std::string pad_start(std::string input, int length, char ch) {
   while (input.size() < length)

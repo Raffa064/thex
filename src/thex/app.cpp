@@ -187,6 +187,34 @@ void THexApp::setup_commands() {
 
         return "Inserted string: '" + input + "'";
       });
+
+  cmdline.add(
+      "next", cmd_func {
+        uint start = editor.cursor.get();
+        uint addr = start;
+        uint length;
+
+        if (is_quoted_str(raw)) {
+          std::string sequence = raw.substr(1, raw.length() - 2);
+          addr = editor.find(start, Buffer(sequence));
+          length = sequence.size();
+        } else if (is_hex_sequence(raw)) {
+          Buffer buffer = to_hex_seq(raw);
+          addr = editor.find(start, buffer);
+          length = buffer.length;
+        } else
+          return std::string("Invalid input: '" + raw + "'");
+
+        if (addr != start) {
+          editor.cursor.selection = true;
+          editor.cursor.start = addr;
+          editor.cursor.end = addr + length - 1;
+
+          return "Found at 0x" + to_hex(addr, 8);
+        }
+
+        return std::string("Not found: " + raw);
+      });
 }
 
 THexApp::THexApp(std::string path) { editor = Editor(path); }
