@@ -3,6 +3,15 @@
 #include <ncurses.h>
 #include <vector>
 
+bool Pair::operator==(Pair &other) { return x = other.x && y == other.y; }
+
+void UI::set(int x, int y, int w, int h) {
+  pos.x = x;
+  pos.y = y;
+  size.width = w;
+  size.height = h;
+}
+
 void DebugBox::draw() {
   attron(COLOR_PAIR(color));
   draw_frect(pos.x, pos.y, size.width, size.height, 'X');
@@ -14,10 +23,6 @@ void DebugBox::draw() {
 }
 
 bool DebugBox::accept(Event evt) { return false; }
-
-void Separator::draw() {
-  draw_frect(pos.x, pos.y, size.width, size.height, ' ');
-}
 
 void update_fill(Context &ctx) {
   getmaxyx(stdscr, ctx.fill.y, ctx.fill.x);
@@ -63,8 +68,8 @@ void UIPlacer::place(UI &ui, Pair bounds) {
   update_fill(ctx);
 }
 
-void uidraw(std::vector<UI *> uis) {
-  for (auto u : uis) {
+void uidraw(std::vector<UI *> uiElements) {
+  for (auto u : uiElements) {
     draw_frect(u->pos.x, u->pos.y, u->size.width, u->size.height,
                ' '); // clear screen
     u->draw();

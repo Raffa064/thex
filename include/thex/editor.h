@@ -11,13 +11,13 @@ struct Buffer {
   uint length = 0;
   char *data;
 
-  void resize(uint);
+  void resize(uint len);
   std::string to_string();
 
   Buffer() : data(nullptr) {}
 
-  Buffer(uint);
-  Buffer(std::string);
+  Buffer(uint length);
+  Buffer(std::string str);
   Buffer(const Buffer &other);
 
   ~Buffer();
@@ -31,8 +31,8 @@ struct Page {
   uint position = 0;
   uint read = 0;
 
-  char get(int);
-  void set(int, char);
+  void set(int fpos, char ch); // set char at pos (in file pos)
+  char get(int fpos);          // get (in file pos) char
 
   uint end();
 };
@@ -41,8 +41,8 @@ struct Range {
   uint start = 0;
   uint end = 0;
 
-  bool overlaps(Range);
-  bool overlaps(uint);
+  bool overlaps(Range other);
+  bool overlaps(uint pos); // check pos in inside range
 };
 
 struct Cursor : public Range {
@@ -53,10 +53,10 @@ struct Cursor : public Range {
   bool selection = false;
 
   uint get();
-  void set(uint);
-  void move(int);
-  void moven(int);
-  void select(Range);
+  void set(uint pos);
+  void move(int amount);
+  void moven(int n_amount); // move nibble-to-nibble
+  void select(Range range);
   std::string to_string();
 };
 
@@ -70,42 +70,36 @@ public:
   Cursor cursor;
   std::vector<Marker *> markers;
 
-  void get_markers(std::vector<Marker *> &, Range);
-  void get_markers(std::vector<Marker *> &);
+  void get_markers(std::vector<Marker *> &out, Range range);
+  void get_markers(std::vector<Marker *> &out); // get markers from cursor range
 
   uint get_fsize();
 
   // Base I/O functions
-  uint read(Buffer &, uint);
-  bool write(Buffer &, uint);
-  void inject(Buffer &, uint);
-  void remove(uint, uint);
+  uint read(uint pos, Buffer &buffer);
+  bool write(uint pos, Buffer &buffer);
+  void inject(uint pos, Buffer &buffer);
+  void remove(uint start, uint end);
 
   // Derivate I/O functions
-  void read_page(Page &);
-  uint read_num(uint); // TODO: make it work form multiple num types
-  std::string read_str(uint, uint);
+  void read_page(Page &page);
+  uint read_num(uint pos); // TODO: make it work for multiple num types
+  std::string read_str(uint pos, uint length);
 
-  void write_byte(char, uint);
-  void insert_num(uint, uint); // TODO: num types
-  void insert_str(uint, std::string);
-  void fill(uint, uint, char);
-  void wipe(uint, uint);
+  void write_char(uint pos, char ch);
+  void insert_num(uint pos, int num); // TODO: num types
+  void insert_str(uint pos, std::string str);
+  void fill(uint start, uint end, char ch);
+  void wipe(uint start, uint end); // same as fill with zeros
 
   uint find(uint, Buffer);
 
-  void inject_num(uint, uint); // TODO: num types
-  void inject_str(uint, std::string);
+  void inject_num(uint pos, int num); // TODO: num types
+  void inject_str(uint pos, std::string str);
 
   Editor() {}
 
   Editor(std::string path) : path(path) {}
 
-  Editor &operator=(const Editor &other) {
-    path = other.path;
-    cursor = other.cursor;
-    markers = other.markers;
-
-    return *this;
-  }
+  Editor &operator=(const Editor &other);
 };

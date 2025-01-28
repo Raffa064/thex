@@ -133,7 +133,7 @@ bool HexEditor::accept(Event evt) {
 
         currByte |= nib;
 
-        editor->write_byte(currByte, cursor.start);
+        editor->write_char(currByte, cursor.start);
 
         cursor.moven(1);
 
@@ -209,4 +209,10 @@ void HexEditor::draw_char(int x, int y, int addr, char byte) {
   draw_color(color);
   mvaddch(y, x, is_non_printable(byte) ? '.' : byte);
   draw_rcolor();
+}
+
+HexEditor &HexEditor::operator=(HexEditor other) {
+  editor = other.editor;
+
+  return *this;
 }

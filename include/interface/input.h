@@ -9,20 +9,22 @@ class Event {
 public:
   int keycode;
   int lowercase;
-  bool isValidKey;
+  bool isValidKey; // False if eq. ERR (constant from ncurses)
 
   bool shift();
-  int axis(int, int);
-  int axisl(int, int);
+  int axis(int lowKey, int highKey);  //  output: [ -1, 0, 1 ]
+  int axisl(int loyKey, int highKey); // ignore case
 
-  bool propagate(std::vector<InputReceiver *>, bool = false);
+  bool propagate(std::vector<InputReceiver *> receivers,
+                 bool allowInvalid = false);
 };
 
 class InputReceiver {
 public:
-  virtual bool accept(Event) = 0;
+  virtual bool accept(Event evt) = 0;
 };
 
+// Wrapper for lambda functions
 class FnReceiver : public InputReceiver {
   std::function<bool(Event)> handler;
 

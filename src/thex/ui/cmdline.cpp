@@ -80,3 +80,11 @@ bool CommandLine::accept(Event evt) {
 CommandLine::CommandLine() { buffer = new char[COMMAND_BUFFER_SIZE]; }
 
 CommandLine::~CommandLine() { delete[] buffer; }
+
+CommandLine &CommandLine::operator=(CommandLine other) {
+  buffer = other.buffer;
+  commands = other.commands;
+  command_output = other.command_output;
+
+  return *this;
+}

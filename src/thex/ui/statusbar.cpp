@@ -14,3 +14,9 @@ void StatusBar::draw() {
   draw_text(pos.x, pos.y, "  THEX  " + cursor.to_string() + help_text);
   draw_rcolor();
 }
+
+StatusBar &StatusBar::operator=(StatusBar other) {
+  editor = other.editor;
+
+  return *this;
+}

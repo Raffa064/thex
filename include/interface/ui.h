@@ -13,7 +13,7 @@ struct Pair {
 
   Pair(int x, int y) : x(x), y(y), width(this->x), height(this->y) {}
 
-  bool operator==(Pair &other) { return x = other.x && y == other.y; }
+  bool operator==(Pair &other);
 };
 
 enum Direction { VERTICAL, HORIZONTAL };
@@ -29,12 +29,7 @@ class UI {
 public:
   Pair pos, size;
 
-  void set(int x, int y, int w, int h) {
-    pos.x = x;
-    pos.y = y;
-    size.width = w;
-    size.height = h;
-  }
+  void set(int x, int y, int w, int h);
 
   virtual void resize() { /* Optional callback */ }
 
@@ -47,34 +42,34 @@ public:
   UI() : pos(0, 0), size(0, 0) {};
 };
 
+// Used for mock up unimplemented UI elements
 class DebugBox : public UI, public InputReceiver {
   int color;
 
 public:
   void draw() override;
 
-  bool accept(Event) override;
+  bool accept(Event evt) override;
 
-  DebugBox(int color) { this->color = color; };
+  DebugBox(int color) : color(color) {};
 };
 
-class Separator : public UI {
-  void draw() override;
-};
-
+// This class is responsible to handle element positioning ans scaling
 class UIPlacer {
 public:
   Context ctx;
 
-  void move(Pair);
+  void move(Pair pos);
 
-  void moveX(int);
+  void moveX(int x);
 
-  void moveY(int);
+  void moveY(int y);
 
-  void align(Direction);
+  void align(Direction align);
 
-  void place(UI &, Pair);
+  void place(UI &ui, Pair bounds);
 };
 
-void uidraw(std::vector<UI *>);
+// Renderize all elements (they need to be already placeed by UIPLacer to
+// correctly set their positions)
+void uidraw(std::vector<UI *> uiElements);

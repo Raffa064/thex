@@ -3,15 +3,15 @@
 #include <string>
 #include <util.h>
 
-std::string to_hex(int v, int width) {
+std::string to_hex(int value, int width) {
   std::ostringstream stream;
-  stream << std::hex << std::setw(width) << std::setfill('0') << v;
+  stream << std::hex << std::setw(width) << std::setfill('0') << value;
   std::string str = stream.str();
 
   return to_upper(str);
 }
 
-std::string to_hex(char ch) { return to_hex(ch, 2); }
+std::string to_hex(char value) { return to_hex(value, 2); }
 
 int hex_to_int(std::string input) {
   if (starts_with(input, "0x"))

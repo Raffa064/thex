@@ -200,7 +200,7 @@ void THexApp::setup_commands() {
           length = sequence.size();
         } else if (is_hex_sequence(raw)) {
           Buffer buffer = to_hex_seq(raw);
-          addr = editor.find(start, buffer);
+          addr = editor.find(start + 1, buffer);
           length = buffer.length;
         } else
           return std::string("Invalid input: '" + raw + "'");

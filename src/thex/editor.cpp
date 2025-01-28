@@ -108,8 +108,8 @@ void Cursor::set(uint pos) {
   start = end = pos;
 }
 
-void Cursor::move(int pos) {
-  int newPosition = static_cast<int>(get()) + pos;
+void Cursor::move(int amount) {
+  int newPosition = static_cast<int>(get()) + amount;
 
   if (newPosition < 0)
     newPosition = 0;
@@ -117,15 +117,15 @@ void Cursor::move(int pos) {
   set(newPosition);
 }
 
-void Cursor::moven(int npos) {
-  npos += nibble;
+void Cursor::moven(int n_amount) {
+  n_amount += nibble;
 
-  if (npos < 0)
+  if (n_amount < 0)
     move(-1);
   else
-    move(npos / 2);
+    move(n_amount / 2);
 
-  nibble = abs(npos % 2);
+  nibble = abs(n_amount % 2);
 }
 
 void Cursor::select(Range range) {
@@ -155,7 +155,7 @@ uint Editor::get_fsize() {
   return file.tellg();
 }
 
-uint Editor::read(Buffer &buffer, uint pos) {
+uint Editor::read(uint pos, Buffer &buffer) {
   std::ifstream file(path, std::ios::binary);
   if (file && file.seekg(pos)) {
     file.read(buffer.data, buffer.length);
@@ -166,7 +166,7 @@ uint Editor::read(Buffer &buffer, uint pos) {
   return 0;
 }
 
-bool Editor::write(Buffer &buffer, uint pos) {
+bool Editor::write(uint pos, Buffer &buffer) {
   std::ofstream file(path, std::ios::binary | std::ios::in);
 
   if (file && file.seekp(pos)) {
@@ -178,65 +178,65 @@ bool Editor::write(Buffer &buffer, uint pos) {
   return false;
 }
 
-void Editor::inject(Buffer &buffer, uint pos) {
+void Editor::inject(uint pos, Buffer &buffer) {
   // TODO: create tmp file, move content before position, append with buffer
   // content, them append the after buffer content, replace file
 }
 
-void Editor::remove(uint pos, uint end) {
+void Editor::remove(uint start, uint end) {
   // TODO: create tmp file, move content before position, skip selection range,
   // append with after contents, replace file
 }
 
 // Derivate I/O functions
 void Editor::read_page(Page &page) {
-  int readBytes = read(page.buffer, page.position);
+  int readBytes = read(page.position, page.buffer);
   page.read = readBytes;
 }
 
-uint Editor::read_num(uint) {
+uint Editor::read_num(uint pos) {
   // TODO: make it work form multiple num types
   return 0;
 }
 
 std::string Editor::read_str(uint pos, uint length) {
   Buffer buffer(length);
-  read(buffer, pos);
+  read(pos, buffer);
 
   return buffer.to_string();
 }
 
-void Editor::write_byte(char ch, uint pos) {
+void Editor::write_char(uint pos, char ch) {
   Buffer tmp = Buffer(1);
   tmp.data[0] = ch;
-  write(tmp, pos);
+  write(pos, tmp);
 }
 
-void Editor::insert_num(uint, uint) {} // TODO: num types
+void Editor::insert_num(uint pos, int num) {} // TODO: num types
 
 void Editor::insert_str(uint pos, std::string str) {
   Buffer buffer(str);
-  write(buffer, pos);
+  write(pos, buffer);
 }
 
-void Editor::fill(uint pos, uint length, char ch) {
-  Buffer buffer(length);
+void Editor::fill(uint start, uint end, char ch) {
+  Buffer buffer(end - start);
 
-  for (int i = 0; i < length; i++)
+  for (int i = 0; i < buffer.length; i++)
     buffer.data[i] = ch;
 
-  write(buffer, pos);
+  write(start, buffer);
 }
 
 // wipe is basically a fill with 0x00
-void Editor::wipe(uint pos, uint length) { fill(pos, length, 0); }
+void Editor::wipe(uint start, uint end) { fill(start, end, 0); }
 
 uint Editor::find(uint start, Buffer sequence) {
   Buffer tmp(sequence.length);
 
   int pos = start;
   while (true) {
-    if (read(tmp, pos) < sequence.length)
+    if (read(pos, tmp) < sequence.length)
       return start;
 
     if (tmp == sequence)
@@ -246,9 +246,17 @@ uint Editor::find(uint start, Buffer sequence) {
   }
 }
 
-void Editor::inject_num(uint, uint) {} // TODO: num types
+void Editor::inject_num(uint pos, int num) {} // TODO: num types
 
 void Editor::inject_str(uint pos, std::string str) {
   Buffer buffer(str);
-  inject(buffer, pos);
+  inject(pos, buffer);
+}
+
+Editor &Editor::operator=(const Editor &other) {
+  path = other.path;
+  cursor = other.cursor;
+  markers = other.markers;
+
+  return *this;
 }

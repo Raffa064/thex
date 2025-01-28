@@ -1,6 +1,6 @@
 #pragma once
 
-#include "thex/ui/hexeditor.h"
+#include "thex/editor.h"
 #include <interface/ui.h>
 
 class StatusBar : public UI {
@@ -13,9 +13,5 @@ public:
 
   StatusBar(Editor *editor) : editor(editor) {}
 
-  StatusBar &operator=(StatusBar other) {
-    editor = other.editor;
-
-    return *this;
-  }
+  StatusBar &operator=(StatusBar other);
 };

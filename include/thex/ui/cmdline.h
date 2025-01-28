@@ -32,7 +32,7 @@ public:
   std::regex pattern;
   CmdFunction fn;
 
-  bool accept(std::string);
+  bool accept(std::string cmd);
 };
 
 class CommandLine : public UI, public InputReceiver {
@@ -41,23 +41,17 @@ class CommandLine : public UI, public InputReceiver {
   std::vector<Command> commands;
 
 public:
-  void add(std::string, CmdFunction);
+  void add(std::string pattern, CmdFunction fn);
 
-  std::string start_input(std::string);
+  std::string start_input(std::string label);
   void start_command();
 
   void draw() override;
-  bool accept(Event) override;
+  bool accept(Event evt) override;
 
   CommandLine();
 
   ~CommandLine();
 
-  CommandLine &operator=(CommandLine other) {
-    buffer = other.buffer;
-    commands = other.commands;
-    command_output = other.command_output;
-
-    return *this;
-  }
+  CommandLine &operator=(CommandLine other);
 };
