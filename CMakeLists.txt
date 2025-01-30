@@ -18,9 +18,13 @@ file(GLOB_RECURSE SOURCES "src/*.cpp")
 add_executable(thex "${SOURCES}")
 target_include_directories(thex PUBLIC "${PROJECT_SOURCE_DIR}/include")
 
-# Include ncurses library
+# Add inicpp library
+add_subdirectory(./inicpp)
+
+# Add ncurses library
 find_package(Curses REQUIRED)
-target_link_libraries(thex PRIVATE ${CURSES_LIBRARIES})
+
+target_link_libraries(thex PRIVATE ${CURSES_LIBRARIES} ${INICPP_LIBRARIES})
 target_include_directories(thex PRIVATE ${CURSES_INCLUDE_DIR})
 
 if(ANDROID)
