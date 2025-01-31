@@ -1,4 +1,3 @@
-#include "thex/config.h"
 #include <iostream>
 #include <ncursesw/ncurses.h>
 #include <string>

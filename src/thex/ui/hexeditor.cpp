@@ -190,7 +190,7 @@ void HexEditor::draw_addr(int x, int y, int addr) {
   Range line = {(uint)addr, (uint)(addr + get_bwidth() - 1)};
   bool overlaps_cursor = editor->cursor.overlaps(line);
 
-  int color = overlaps_cursor ? PALETTE_CURSOR_LINE : PALETTE_NORMAL;
+  int color = overlaps_cursor ? PALETTE_CURSORLINE : PALETTE_NORMAL;
   std::string hex_addr = to_hex(addr, ADDR_SIZE);
 
   draw_color(color);

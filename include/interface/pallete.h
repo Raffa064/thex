@@ -7,21 +7,21 @@
 
 enum Palette {
   TERM_DEFAULT = 0,
-  PALETTE_NORMAL,      // Default/base color
-  PALETTE_M0,          // Marker 0
-  PALETTE_M1,          // Marker 1
-  PALETTE_M2,          // Marker 2
-  PALETTE_CURSOR,      // Cursor
-  PALETTE_CURSOR_LINE, // Color for address bar at cursor line
-  PALETTE_EOF,         // End of file
-  PALETTE_EMPTY,       // Empty cells (after EOF)
-  PALETTE_STATUSBAR    // statusbar color
+  PALETTE_NORMAL,     // Default/base color
+  PALETTE_M0,         // Marker 0
+  PALETTE_M1,         // Marker 1
+  PALETTE_M2,         // Marker 2
+  PALETTE_CURSOR,     // Cursor
+  PALETTE_CURSORLINE, // Color for address bar at cursor line
+  PALETTE_EOF,        // End of file
+  PALETTE_EMPTY,      // Empty cells (after EOF)
+  PALETTE_STATUSBAR   // statusbar color
 };
 
 // Color map (from [0-255] to [0-1000])
 static int cmap(uint8_t value) { return (value * 1000) / 255; }
 
-static void set_colorp(int color_code, ColorPair pair) {
+static void pallete_add(int color_code, ColorPair pair) {
   int fg = color_code * 2;
   int bg = fg + 1;
 
@@ -33,16 +33,18 @@ static void set_colorp(int color_code, ColorPair pair) {
 
 [[maybe_unused]]
 static void init_palette() {
-  if (can_change_color()) { // If custom color are supported
-    set_colorp(PALETTE_NORMAL, Config::get_colorp("normal"));
-    set_colorp(PALETTE_M0, Config::get_colorp("marker_0"));
-    set_colorp(PALETTE_M1, Config::get_colorp("marker_1"));
-    set_colorp(PALETTE_M2, Config::get_colorp("marker_2"));
-    set_colorp(PALETTE_CURSOR, Config::get_colorp("cursor"));
-    set_colorp(PALETTE_CURSOR_LINE, Config::get_colorp("cursor_line"));
-    set_colorp(PALETTE_EOF, Config::get_colorp("eof"));
-    set_colorp(PALETTE_EMPTY, Config::get_colorp("empty"));
-    set_colorp(PALETTE_STATUSBAR, Config::get_colorp("statusbar"));
+  using namespace Config;
+
+  if (can_change_color() && !get_flag("palette.use_native")) {
+    pallete_add(PALETTE_NORMAL, get_pair("normal", "#cccccc;#222222"));
+    pallete_add(PALETTE_M0, get_pair("marker_0", "#222222;#20cc88"));
+    pallete_add(PALETTE_M1, get_pair("marker_1", "#222222;#ddcc00"));
+    pallete_add(PALETTE_M2, get_pair("marker_2", "#dddddd;#df4a7f"));
+    pallete_add(PALETTE_CURSOR, get_pair("cursor", "#222222;#00ccff"));
+    pallete_add(PALETTE_CURSORLINE, get_pair("cursorline", "#60cc68;#222222"));
+    pallete_add(PALETTE_EOF, get_pair("eof", "#ff0000;#ff0000"));
+    pallete_add(PALETTE_EMPTY, get_pair("empty", "#222222;#222222"));
+    pallete_add(PALETTE_STATUSBAR, get_pair("statusbar", "#222222;#60cc68"));
     return;
   }
 
@@ -51,7 +53,7 @@ static void init_palette() {
   init_pair(PALETTE_M1, COLOR_BLACK, COLOR_YELLOW);
   init_pair(PALETTE_M2, COLOR_WHITE, COLOR_RED);
   init_pair(PALETTE_CURSOR, COLOR_BLACK, COLOR_BLUE);
-  init_pair(PALETTE_CURSOR_LINE, COLOR_GREEN, COLOR_BLACK);
+  init_pair(PALETTE_CURSORLINE, COLOR_GREEN, COLOR_BLACK);
   init_pair(PALETTE_EOF, COLOR_RED, COLOR_RED);
   init_pair(PALETTE_EMPTY, COLOR_BLACK, COLOR_BLACK);
   init_pair(PALETTE_STATUSBAR, COLOR_BLACK, COLOR_GREEN);

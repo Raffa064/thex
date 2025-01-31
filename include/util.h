@@ -6,6 +6,9 @@
 #include <vector>
 
 // File system (fs.cpp)
+std::string lookup_file(std::string path, std::string name);
+bool mkdirs(std::string path);
+std::string get_home();
 std::string get_cwd();
 bool is_valid_path(std::string path);
 
