@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.31.0)
 option(DEBUG OFF) # Disable compiler optimizations for faster build
 option(OPTIMIZE OFF) # Enables a lot of optimizations
 
+set(CMAKE_BUILD_PARALLEL_LEVEL 8) # use multiple threads to build faster
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Necessary for LSP completion
