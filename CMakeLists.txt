@@ -19,7 +19,7 @@ if(DEBUG)
 elseif(OPTIMIZE)
   message(WARNING "Using agressive optimizations")
   set(CMAKE_CXX_FLAGS
-      "${CMAKE_CXX_FLAGS} -O3 -Werror -funroll-loops -flto -fvisibility=hidden -ftree-vectorize -fno-rtti -fno-common"
+      "${CMAKE_CXX_FLAGS} -O3 -Werror -funroll-loops -fvisibility=hidden -ftree-vectorize -fno-rtti -fno-common"
   )
 endif()
 
