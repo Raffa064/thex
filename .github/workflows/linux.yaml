@@ -44,7 +44,7 @@ jobs:
         fi
 
     - name: Creating Artifactic
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: thex_linux_x86-64_${{ env.label }}
         path: ./thex
