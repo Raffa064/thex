@@ -1,11 +1,11 @@
 #include <cstdlib>
-#include <interface/draw.h>
-#include <interface/input.h>
+#include <interface/draw.hpp>
+#include <interface/input.hpp>
 #include <ncurses.h>
 #include <ncursesw/ncurses.h>
 #include <regex>
-#include <thex/ui/cmdline.h>
-#include <util.h>
+#include <thex/ui/cmdline.hpp>
+#include <util.hpp>
 
 const int COMMAND_BUFFER_SIZE = 1024;
 

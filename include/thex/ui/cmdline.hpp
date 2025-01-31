@@ -1,8 +1,8 @@
 #pragma once
 
 #include <functional>
-#include <interface/input.h>
-#include <interface/ui.h>
+#include <interface/input.hpp>
+#include <interface/ui.hpp>
 #include <regex>
 #include <string>
 #include <vector>

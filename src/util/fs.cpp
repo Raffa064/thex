@@ -1,8 +1,8 @@
-#include "util.h"
 #include <cstdlib>
 #include <filesystem>
 #include <string>
 #include <unistd.h>
+#include <util.hpp>
 
 std::string lookup_file(std::string path, std::string name) {
   int i = path.length();

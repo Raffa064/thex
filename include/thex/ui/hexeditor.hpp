@@ -1,8 +1,8 @@
 #pragma once
 
-#include <interface/input.h>
-#include <interface/ui.h>
-#include <thex/editor.h>
+#include <interface/input.hpp>
+#include <interface/ui.hpp>
+#include <thex/editor.hpp>
 
 class HexEditor : public UI, public InputReceiver {
 public:

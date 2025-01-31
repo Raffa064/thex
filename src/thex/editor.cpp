@@ -1,10 +1,10 @@
-#include "util.h"
 #include <cstdlib>
 #include <cstring>
 #include <fstream>
 #include <ios>
 #include <string>
-#include <thex/editor.h>
+#include <thex/editor.hpp>
+#include <util.hpp>
 #include <vector>
 
 void Buffer::resize(uint len) {

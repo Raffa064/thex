@@ -1,5 +1,5 @@
-#include <interface/draw.h>
-#include <interface/ui.h>
+#include <interface/draw.hpp>
+#include <interface/ui.hpp>
 #include <ncurses.h>
 #include <vector>
 

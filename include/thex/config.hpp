@@ -1,6 +1,6 @@
 #pragma once
 
-#include "interface/color.h"
+#include <interface/color.hpp>
 #include <string>
 
 namespace Config {

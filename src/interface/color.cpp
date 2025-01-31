@@ -1,5 +1,5 @@
-#include "interface/color.h"
-#include <util.h>
+#include <interface/color.hpp>
+#include <util.hpp>
 
 std::string Color::to_string() {
   return "#" + to_hex(r) + to_hex(g) + to_hex(b);

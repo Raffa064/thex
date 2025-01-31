@@ -1,5 +1,5 @@
 #include <cctype>
-#include <interface/input.h>
+#include <interface/input.hpp>
 #include <ncurses.h>
 #include <vector>
 

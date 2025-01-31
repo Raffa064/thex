@@ -1,12 +1,12 @@
-#include "interface/input.h"
+#include "interface/input.hpp"
 #include <cstdlib>
 #include <cstring>
-#include <interface/draw.h>
-#include <interface/pallete.h>
+#include <interface/draw.hpp>
+#include <interface/pallete.hpp>
 #include <ncurses.h>
 #include <string>
-#include <thex/ui/hexeditor.h>
-#include <util.h>
+#include <thex/ui/hexeditor.hpp>
+#include <util.hpp>
 
 int HexEditor::get_bwidth() { return (size.width - FIXED_SIZE) / 4; }
 

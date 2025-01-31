@@ -1,6 +1,6 @@
 #include <regex>
 #include <string>
-#include <util.h>
+#include <util.hpp>
 
 const std::regex REGEX_NUMBER("[\\-\\+]?[0-9]+");
 const std::regex REGEX_HEX("(0x)?[0-9a-f]+", std::regex::icase);

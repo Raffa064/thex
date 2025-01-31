@@ -1,8 +1,8 @@
 #pragma once
 
-#include "interface/color.h"
-#include "thex/editor.h"
+#include <interface/color.hpp>
 #include <string>
+#include <thex/editor.hpp>
 #include <vector>
 
 // File system (fs.cpp)

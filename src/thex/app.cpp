@@ -1,20 +1,20 @@
-#include "thex/editor.h"
-#include "util.h"
 #include <algorithm>
 #include <clocale>
 #include <csignal>
 #include <cstdlib>
-#include <interface/input.h>
-#include <interface/pallete.h>
-#include <interface/ui.h>
+#include <interface/input.hpp>
+#include <interface/pallete.hpp>
+#include <interface/ui.hpp>
 #include <locale.h>
 #include <ncurses.h>
 #include <string>
-#include <thex/app.h>
-#include <thex/config.h>
-#include <thex/ui/cmdline.h>
-#include <thex/ui/hexeditor.h>
-#include <thex/ui/statusbar.h>
+#include <thex/app.hpp>
+#include <thex/config.hpp>
+#include <thex/editor.hpp>
+#include <thex/ui/cmdline.hpp>
+#include <thex/ui/hexeditor.hpp>
+#include <thex/ui/statusbar.hpp>
+#include <util.hpp>
 #include <vector>
 
 #define DEFAULT_PREVIEW_WITH 30

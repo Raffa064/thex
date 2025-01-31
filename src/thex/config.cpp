@@ -1,7 +1,7 @@
-#include "ini.h"
-#include "util.h"
+#include <ini.hpp>
 #include <string>
-#include <thex/config.h>
+#include <thex/config.hpp>
+#include <util.hpp>
 
 ini::Document configs;
 

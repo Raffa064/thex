@@ -1,10 +1,10 @@
 #include <cstdint>
-#include <interface/color.h>
+#include <interface/color.hpp>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <util.h>
+#include <util.hpp>
 
 std::string to_hex(int value, int width) {
   std::ostringstream stream;

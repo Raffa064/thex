@@ -1,10 +1,10 @@
 #pragma once
 
-#include <interface/ui.h>
+#include <interface/ui.hpp>
 #include <ncurses.h>
-#include <thex/ui/cmdline.h>
-#include <thex/ui/hexeditor.h>
-#include <thex/ui/statusbar.h>
+#include <thex/ui/cmdline.hpp>
+#include <thex/ui/hexeditor.hpp>
+#include <thex/ui/statusbar.hpp>
 
 class THexApp {
   Editor editor;

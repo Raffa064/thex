@@ -1,7 +1,7 @@
 #pragma once
 
-#include "thex/editor.h"
-#include <interface/ui.h>
+#include <interface/ui.hpp>
+#include <thex/editor.hpp>
 
 class StatusBar : public UI {
   Editor *editor;

@@ -1,8 +1,8 @@
-#include <interface/draw.h>
-#include <interface/pallete.h>
+#include <interface/draw.hpp>
+#include <interface/pallete.hpp>
 #include <string>
-#include <thex/editor.h>
-#include <thex/ui/statusbar.h>
+#include <thex/editor.hpp>
+#include <thex/ui/statusbar.hpp>
 
 #define help_text " Mov: ^i <j vk >l Togg.Selection: s"
 

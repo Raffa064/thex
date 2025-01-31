@@ -1,6 +1,6 @@
 #include <cmath>
-#include <interface/draw.h>
-#include <interface/pallete.h>
+#include <interface/draw.hpp>
+#include <interface/pallete.hpp>
 #include <ncurses.h>
 
 #define draw(x, y, ch) mvaddch(y, x, ch)
