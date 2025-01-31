@@ -62,6 +62,7 @@ Esse comando deve ser executado sempre que adicionar e remover arquivos das past
 
 **Opções de build:**
 - `-DDEBUG`: Desabilita otimizações do compilador, para gerar build mais rápido; ativa warnings e habilita debug com gdb.
+- `-OPTIMIZE`: Habilita várias otimizações do compilador e do linker. Não poded ser usado com `DEBUG` ativo.
 
 Após isso, use o seguinte comando para gerar o executável:
 ```bash

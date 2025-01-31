@@ -12,9 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         debug: [ "ON", "OFF" ]
+        optimize: [ "ON", "OFF" ]
+
+        exclude:
+          - debug: "ON"
+            optimize: "ON"
 
     steps:
     - uses: actions/checkout@v4
@@ -31,7 +36,7 @@ jobs:
       run: |
         export CXX=clang++
         export CC=clang
-        cmake . -DDEBUG="${{ matrix.debug }}"
+        cmake . -DDEBUG="${{ matrix.debug }}" -DOPTIMIZE="${{ matrix.optimize }}"
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
@@ -39,12 +44,19 @@ jobs:
 
     - name: "Set label"
       run: |
+        label=unknown
+
         if [ "${{ matrix.debug }}" == "ON" ]; then
-          echo "label=debug" >> $GITHUB_ENV
+          label=debug
         else
-          echo "label=release" >> $GITHUB_ENV
+          label=release
         fi
 
+        if [ "${{ matrix.optimize }}" == "ON" ]; then
+          label="$label-optimized"
+        fi
+        
+        echo "label=$label" >> $GITHUB_ENV
     - name: Creating Artifactic
       uses: actions/upload-artifact@v4
       with:

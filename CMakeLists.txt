@@ -2,15 +2,27 @@ cmake_minimum_required(VERSION 3.31.0)
 
 # Build options
 option(DEBUG OFF) # Disable compiler optimizations for faster build
+option(OPTIMIZE OFF) # Enables a lot of optimizations
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Necessary for LSP completion
 
 if(DEBUG)
-  message("Using DEBUG build option")
+  message(WARNING "Using DEBUG build option")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -Wall -g")
+
+  if(OPTIMIZE)
+    message(WARNING "Can't use OPTIMIZE with debug option")
+  endif()
+elseif(OPTIMIZE)
+  message(WARNING "Using agressive optimizations")
+  set(CMAKE_CXX_FLAGS
+      "${CMAKE_CXX_FLAGS} -O3 -Werror -funroll-loops -flto -fvisibility=hidden -ftree-vectorize -fno-rtti -fno-common"
+  )
 endif()
+
+message("  * CXX_FLAGS: '${CMAKE_CXX_FLAGS}'")
 
 # Project sources and targets
 project(THex)
@@ -44,6 +56,5 @@ else()
   endif()
 endif()
 
-message("Installation prefix: " ${CMAKE_INSTALL_PREFIX})
-
+message("  * Installation prefix: " ${CMAKE_INSTALL_PREFIX})
 install(TARGETS thex DESTINATION bin)

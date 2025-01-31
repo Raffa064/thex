@@ -62,6 +62,7 @@ This command should be called every time you add or remove files frfom `src` or 
 
 **Build options**
 - `-DDEBUG`: Disable compiler optimizaztions, to build faster; and enables warnigs and `gdb` debug.
+- `-DOPTIMIZE`: Enables a lot of compiler and linker optimizations. Can't be used with `DEBUG`. 
 
 The next step is to run cmake build command, to compile and generate our executable:
 ```bash
