@@ -1,4 +1,6 @@
+#include "thex/config.h"
 #include <iostream>
+#include <ncursesw/ncurses.h>
 #include <string>
 #include <thex/app.h>
 #include <util.h>

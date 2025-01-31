@@ -1,5 +1,6 @@
 #pragma once
 
+#include "interface/color.h"
 #include "thex/editor.h"
 #include <string>
 #include <vector>
@@ -18,9 +19,10 @@ std::string pad_end(std::string input, int length, char ch = ' ');
 
 // Convert data (convert.cpp)
 std::string to_hex(int value, int width);
-std::string to_hex(int value);
+std::string to_hex(char value);
 int hex_to_int(std::string input);
 Buffer to_hex_seq(std::string input); // Converts hex sequences to a Buffer
+ColorPair to_color_pair(std::string input);
 
 // Validate data (validate.cpp)
 bool is_number(const std::string &input);
@@ -28,3 +30,5 @@ bool is_hex(const std::string &input);
 bool is_non_printable(const char &ch);
 bool is_quoted_str(const std::string &input);
 bool is_hex_sequence(const std::string &input);
+bool is_flag(const std::string &input);
+bool is_color_pair(const std::string &input);

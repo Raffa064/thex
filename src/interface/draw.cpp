@@ -1,5 +1,6 @@
 #include <cmath>
 #include <interface/draw.h>
+#include <interface/pallete.h>
 #include <ncurses.h>
 
 #define draw(x, y, ch) mvaddch(y, x, ch)
@@ -11,7 +12,7 @@ void draw_color(int color) {
   attron(COLOR_PAIR(currentColor));
 }
 
-void draw_rcolor() { attroff(COLOR_PAIR(currentColor)); }
+void draw_rcolor() { draw_color(PALETTE_NORMAL); }
 
 void draw_frect(int px, int py, int w, int h, char ch) {
   for (int y = 0; y < h; y++) {

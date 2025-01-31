@@ -11,6 +11,7 @@
 #include <ncurses.h>
 #include <string>
 #include <thex/app.h>
+#include <thex/config.h>
 #include <thex/ui/cmdline.h>
 #include <thex/ui/hexeditor.h>
 #include <thex/ui/statusbar.h>
@@ -30,6 +31,7 @@ void THexApp::start() {
   nodelay(stdscr, TRUE); // Remove input delay
   start_color();         // use colors
 
+  Config::init();
   init_palette();
 
   // UI elements
