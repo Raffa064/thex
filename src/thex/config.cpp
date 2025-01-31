@@ -11,12 +11,12 @@ void Config::init() {
 
   // Global configs
   std::string global_cfg_file = config_dir + "/config.ini";
-  load(global_cfg_file, configs);
+  ini::load(global_cfg_file, configs);
 
   // Local configs
   std::string local_cfg_file = lookup_file(get_cwd(), "thex.ini");
   if (!local_cfg_file.empty())
-    load(local_cfg_file, configs);
+    ini::load(local_cfg_file, configs);
 }
 
 ColorPair Config::get_pair(std::string color, std::string df) {
