@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-typedef std::uint32_t uint;
+typedef uint32_t uint;
 
 struct Buffer {
   uint length = 0;

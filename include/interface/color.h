@@ -1,9 +1,10 @@
 #pragma once
 
+#include <cstdint>
 #include <string>
 
 struct Color {
-  std::uint8_t r, g, b;
+  uint8_t r, g, b;
 
   std::string to_string();
 };

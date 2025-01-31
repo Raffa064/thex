@@ -1,9 +1,10 @@
 #pragma once
 
-#include "interface/color.h"
-#include "thex/config.h"
+#include <interface/color.h>
 #include <ncurses.h>
 #include <ncursesw/ncurses.h>
+#include <stdint.h>
+#include <thex/config.h>
 
 enum Palette {
   TERM_DEFAULT = 0,

@@ -42,11 +42,11 @@ Color to_color(std::string input) {
   if (input[0] == '#')
     input = input.substr(1);
 
-  std::uint32_t color = hex_to_int(input);
+  uint32_t color = hex_to_int(input);
 
-  return {.r = (std::uint8_t)((color & 0xFF0000) >> 16),
-          .g = (std::uint8_t)((color & 0xFF00) >> 8),
-          .b = (std::uint8_t)((color & 0xFF))};
+  return {.r = (uint8_t)((color & 0xFF0000) >> 16),
+          .g = (uint8_t)((color & 0xFF00) >> 8),
+          .b = (uint8_t)((color & 0xFF))};
 }
 
 ColorPair to_color_pair(std::string input) {
