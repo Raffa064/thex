@@ -68,9 +68,6 @@ void THexApp::loop() {
     placer.place(cmdline, {FILLW, 1});
 
     uidraw({&hexEditor, &statusbar, &cmdline});
-
-    if (e.keycode == 127)
-      is_running = false;
   }
 }
 

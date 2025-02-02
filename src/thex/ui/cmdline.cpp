@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <cstring>
 #include <interface/draw.hpp>
 #include <interface/input.hpp>
 #include <ncurses.h>
@@ -82,7 +83,6 @@ CommandLine::CommandLine() { buffer = new char[COMMAND_BUFFER_SIZE]; }
 CommandLine::~CommandLine() { delete[] buffer; }
 
 CommandLine &CommandLine::operator=(CommandLine other) {
-  buffer = other.buffer;
   commands = other.commands;
   command_output = other.command_output;
 
